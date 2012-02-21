@@ -27,6 +27,11 @@ sub fetch_mirror_list {
     require XML::Simple;
 
     my $xml = LWP::Simple::get( sprintf( MIRRORS_URL, $api_key ) );
+
+    unless ($xml) {
+        die "Could not get mirrors.xml";
+    }
+
     $self->{mirrors} = XML::Simple::XMLin($xml);
 }
 
