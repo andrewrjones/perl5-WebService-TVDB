@@ -5,7 +5,7 @@ package Net::TVDB::Mirror;
 
 # ABSTRACT: Gets and saves a mirror
 
-use constant MIRRORS_URL => ' http://www.thetvdb.com/api/%s/mirrors.xml';
+use constant MIRRORS_URL => 'http://www.thetvdb.com/api/%s/mirrors.xml';
 
 sub new {
     my $class = shift;
@@ -50,9 +50,6 @@ sub get_mirror {
 =method new()
 
 Create new object. Takes no arguments.
-
-=for :list
-* api_key - Your TVDB API key. Required. Will die if not present.
 
 =method fetch_mirror_list($api_key)
 
