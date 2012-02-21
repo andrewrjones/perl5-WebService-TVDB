@@ -1,0 +1,57 @@
+use strict;
+use warnings;
+
+package Net::TVDB::Servertime;
+
+# ABSTRACT: Gets and saves the TVDB servertime
+
+use constant SERVERTIME_URL =>
+  'http://www.thetvdb.com/api/Updates.php?type=none';
+
+sub new {
+    my $class = shift;
+    my $args  = shift;
+    my $self  = {};
+
+    bless( $self, $class );
+    return $self;
+}
+
+sub fetch_servertime {
+    my ($self) = @_;
+
+    require LWP::Simple;
+    require XML::Simple;
+
+    my $xml = LWP::Simple::get(SERVERTIME_URL);
+    $self->{parsed_xml} = XML::Simple::XMLin($xml);
+}
+
+sub get_servertime {
+    my ($self) = @_;
+
+    if ( defined $self->{parsed_xml} ) {
+        return $self->{parsed_xml}->{Time};
+    }
+    return;
+}
+
+1;
+
+=head1 SYNOPSIS
+
+  my $servertime = Net::TVDB::Servertime->new();
+  $servertime->fetch_servertime();
+  my $previous_time = $servertime->get_servertime();
+  
+=method new()
+
+Create new object. Takes no arguments.
+
+=method fetch_servertime()
+
+Fetches the servertime from thetvdb.com.
+
+=method get_servertime()
+
+Gets the servertime. You will need to have called fetch_servertime() before.
