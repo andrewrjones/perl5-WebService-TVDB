@@ -109,7 +109,7 @@ our $languages = {
 
 =head1 SYNOPSIS
 
-  use Net::TVDB::Languages qw($langauges);
+  use Net::TVDB::Languages qw($languages);
 
 =head1 DESCRIPTION
 

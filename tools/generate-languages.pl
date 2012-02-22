@@ -41,11 +41,11 @@ my $now = DateTime->now->ymd;
 my $pod = <<"HERE";
 =head1 SYNOPSIS
 
-  use Net::TVDB::Languages qw(\$langauges);
+  use Net::TVDB::Languages qw(\$languages);
 
 =head1 DESCRIPTION
 
-This contains all the langauges supported by http://thetvdb.com as of $now.
+This contains all the languages supported by http://thetvdb.com as of $now.
 
 They are as follows:
 
