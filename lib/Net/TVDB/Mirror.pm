@@ -5,6 +5,9 @@ package Net::TVDB::Mirror;
 
 # ABSTRACT: Gets and saves a mirror
 
+use LWP::Simple ();
+use XML::Simple qw(:strict);
+
 use constant MIRRORS_URL => 'http://www.thetvdb.com/api/%s/mirrors.xml';
 
 sub new {
@@ -23,16 +26,14 @@ sub fetch_mirror_list {
         die 'Need an API key';
     }
 
-    require LWP::Simple;
-    require XML::Simple;
-
     my $xml = LWP::Simple::get( sprintf( MIRRORS_URL, $api_key ) );
 
     unless ($xml) {
         die "Could not get mirrors.xml";
     }
 
-    $self->{mirrors} = XML::Simple::XMLin($xml);
+    $self->{mirrors} =
+      XML::Simple::XMLin( $xml, ForceArray => 0, KeyAttr => [] );
 }
 
 sub get_mirror {

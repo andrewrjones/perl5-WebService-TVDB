@@ -6,7 +6,7 @@ use warnings;
 use Test::More tests => 6;
 use Test::Exception;
 
-require XML::Simple;
+use XML::Simple qw(:strict);
 use FindBin qw($Bin);
 use File::HomeDir;
 
@@ -22,7 +22,11 @@ $mirror = Net::TVDB::Mirror->new();
 isa_ok( $mirror, 'Net::TVDB::Mirror' );
 
 # test getting a mirror from XML
-$mirror->{mirrors} = XML::Simple::XMLin("$Bin/resources/mirrors.xml");
+$mirror->{mirrors} = XML::Simple::XMLin(
+    "$Bin/resources/mirrors.xml",
+    ForceArray => 0,
+    KeyAttr    => []
+);
 $mirror_url = $mirror->get_mirror();
 is( $mirror_url, 'http://thetvdb.com' );
 

@@ -5,6 +5,9 @@ package Net::TVDB::Servertime;
 
 # ABSTRACT: Gets and saves the TVDB servertime
 
+use XML::Simple qw(:strict);
+use LWP::Simple;
+
 use constant SERVERTIME_URL =>
   'http://www.thetvdb.com/api/Updates.php?type=none';
 
@@ -20,11 +23,9 @@ sub new {
 sub fetch_servertime {
     my ($self) = @_;
 
-    require LWP::Simple;
-    require XML::Simple;
-
     my $xml = LWP::Simple::get(SERVERTIME_URL);
-    $self->{parsed_xml} = XML::Simple::XMLin($xml);
+    $self->{parsed_xml} =
+      XML::Simple::XMLin( $xml, ForceArray => 0, KeyAttr => [] );
 }
 
 sub get_servertime {

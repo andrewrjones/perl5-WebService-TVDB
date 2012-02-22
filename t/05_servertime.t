@@ -5,7 +5,7 @@ use warnings;
 
 use Test::More tests => 4;
 
-require XML::Simple;
+use XML::Simple qw(:strict);
 use FindBin qw($Bin);
 
 BEGIN { use_ok('Net::TVDB::Servertime'); }
@@ -18,7 +18,11 @@ $servertime = Net::TVDB::Servertime->new();
 isa_ok( $servertime, 'Net::TVDB::Servertime' );
 
 # test getting a mirror from XML
-$servertime->{parsed_xml} = XML::Simple::XMLin("$Bin/resources/servertime.xml");
+$servertime->{parsed_xml} = XML::Simple::XMLin(
+    "$Bin/resources/servertime.xml",
+    ForceArray => 0,
+    KeyAttr    => []
+);
 $previous_time = $servertime->get_servertime();
 is( $previous_time, '1329830659' );
 
