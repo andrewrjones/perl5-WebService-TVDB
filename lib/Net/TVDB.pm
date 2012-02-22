@@ -16,7 +16,7 @@ sub new {
 
 # slurps the api_key from file
 sub _get_api_key_from_file {
-    my ( $self, $file ) = @_;
+    my ($file) = @_;
 
     return do {
         local $/ = undef;

@@ -16,5 +16,5 @@ $tvdb = Net::TVDB->new();
 isa_ok( $tvdb, 'Net::TVDB' );
 
 # test slurping the api_key from a file
-my $api_key = $tvdb->_get_api_key_from_file("$Bin/resources/tvdb");
+my $api_key = Net::TVDB::_get_api_key_from_file("$Bin/resources/tvdb");
 is( $api_key, 'ABC123' );

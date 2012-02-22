@@ -39,8 +39,8 @@ SKIP: {
     skip "Skipping live tests: Can not find $api_key_file", 1
       unless -e $api_key_file;
 
-    my $tvdb = Net::TVDB->new();
-    $mirror->fetch_mirror_list( $tvdb->_get_api_key_from_file($api_key_file) );
+    $mirror->fetch_mirror_list(
+        Net::TVDB::_get_api_key_from_file($api_key_file) );
     $mirror_url = $mirror->get_mirror();
     is( $mirror_url, 'http://thetvdb.com' );
 }
