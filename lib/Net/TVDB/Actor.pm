@@ -3,6 +3,8 @@ use warnings;
 
 package Net::TVDB::Actor;
 
+# ABSTRACT: Represents an Actor
+
 # Assessors
 # alphabetically, case insensitive
 use Object::Tiny qw(

@@ -3,6 +3,8 @@ use warnings;
 
 package Net::TVDB::Series;
 
+# ABSTRACT: Represents a TV Series
+
 use Net::TVDB::Actor;
 
 # Assessors
