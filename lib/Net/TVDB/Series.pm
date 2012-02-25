@@ -124,6 +124,19 @@ sub fetch {
     $self->_parse_banners($parsed_xml);
 }
 
+sub get_episode {
+    my ( $self, $season_number, $episode_number ) = @_;
+
+    for my $episode ( @{ $self->episodes } ) {
+        if ( $episode->SeasonNumber eq $season_number ) {
+            if ( $episode->EpisodeNumber eq $episode_number ) {
+                return $episode;
+            }
+        }
+
+    }
+}
+
 # generates the url for full series data
 sub _url {
     my ($self) = @_;

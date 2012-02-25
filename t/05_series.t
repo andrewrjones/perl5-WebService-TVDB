@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 98;
+use Test::More tests => 99;
 
 use FindBin qw($Bin);
 use XML::Simple qw(:strict);
@@ -77,3 +77,6 @@ for ( @{$episodes} ) {
 my $episode = @{$episodes}[0];
 is( $episode->id,          342429 );
 is( $episode->EpisodeName, 'Children in Need Special' );
+
+$episode = $series->get_episode( 6, 1 );
+is( $episode->EpisodeName, 'Stag Night', 'episode title' );
