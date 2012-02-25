@@ -16,6 +16,7 @@ use Object::Tiny qw(
   Language
   Rating
   RatingCount
+  Season
   SeriesName
   ThumbnailPath
   VignettePath
