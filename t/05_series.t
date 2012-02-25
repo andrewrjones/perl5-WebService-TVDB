@@ -22,7 +22,8 @@ my $xml = XML::Simple::XMLin(
     ForceArray => 0,
     KeyAttr    => 'Actor'
 );
-my $actors = Net::TVDB::Series::_parse_actors($xml);
+$series->_parse_actors($xml);
+my $actors = $series->actors;
 is( @$actors, 7, '7 actors' );
 for ( @{$actors} ) {
     isa_ok( $_, 'Net::TVDB::Actor' );
@@ -39,7 +40,8 @@ $xml = XML::Simple::XMLin(
     ForceArray => 0,
     KeyAttr    => 'Banner'
 );
-my $banners = Net::TVDB::Series::_parse_banners($xml);
+$series->_parse_banners($xml);
+my $banners = $series->banners;
 is( @$banners, 20, '20 banners' );
 for ( @{$banners} ) {
     isa_ok( $_, 'Net::TVDB::Banner' );

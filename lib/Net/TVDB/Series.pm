@@ -28,26 +28,28 @@ use Object::Tiny qw(
 
 # parse actors.xml
 sub _parse_actors {
-    my ($xml) = @_;
+    my ( $self, $xml ) = @_;
 
     my @actors;
     for ( @{ $xml->{Actor} } ) {
         push @actors, Net::TVDB::Actor->new( %{$_} );
 
     }
-    return \@actors;
+    $self->{actors} = \@actors;
+    return $self->{actors};
 }
 
 # parse banners.xml
 sub _parse_banners {
-    my ($xml) = @_;
+    my ( $self, $xml ) = @_;
 
     my @banners;
     for ( @{ $xml->{Banner} } ) {
         push @banners, Net::TVDB::Banner->new( %{$_} );
 
     }
-    return \@banners;
+    $self->{banners} = \@banners;
+    return $self->{banners};
 }
 
 1;
