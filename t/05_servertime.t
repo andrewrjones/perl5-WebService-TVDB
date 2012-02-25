@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 4;
+use Test::More tests => 3;
 
 use XML::Simple qw(:strict);
 use FindBin qw($Bin);
@@ -27,6 +27,6 @@ $previous_time = $servertime->get_servertime();
 is( $previous_time, '1329830659' );
 
 # live test, fetching from http://thetvdb.com
-$servertime->fetch_servertime();
-$previous_time = $servertime->get_servertime();
-like( $previous_time, qr/^\d+$/ );
+#$servertime->fetch_servertime();
+#$previous_time = $servertime->get_servertime();
+#like( $previous_time, qr/^\d+$/ );

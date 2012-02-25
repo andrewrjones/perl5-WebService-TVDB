@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 14;
+use Test::More tests => 9;
 use Test::Exception;
 
 use XML::Simple qw(:strict);
@@ -29,7 +29,7 @@ my $xml = XML::Simple::XMLin(
     ForceArray => 0,
     KeyAttr    => 'Series'
 );
-$series_list = Net::TVDB::_parse_series($xml);
+$series_list = Net::TVDB::_parse_series( $xml, '1234', {}, {} );
 is( @{$series_list}, 2, 'two series results' );
 $series = @{$series_list}[0];
 isa_ok( $series, 'Net::TVDB::Series' );
@@ -38,15 +38,6 @@ $series = @{$series_list}[1];
 isa_ok( $series, 'Net::TVDB::Series' );
 is( $series->SeriesName, 'Men Behaving Badly (US)' );
 
-# test a live search
+# test an error search
 throws_ok { $tvdb->search() } qr/search term is required/i,
   'needs an search term';
-
-$series_list = $tvdb->search('men behaving badly');
-is( @{$series_list}, 2, 'two series results' );
-$series = @{$series_list}[0];
-isa_ok( $series, 'Net::TVDB::Series' );
-is( $series->SeriesName, 'Men Behaving Badly' );
-$series = @{$series_list}[1];
-isa_ok( $series, 'Net::TVDB::Series' );
-is( $series->SeriesName, 'Men Behaving Badly (US)' );

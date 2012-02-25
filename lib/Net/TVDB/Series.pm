@@ -9,11 +9,17 @@ use Net::TVDB::Actor;
 use Net::TVDB::Banner;
 use Net::TVDB::Episode;
 
+use File::Temp ();
+use Archive::Zip qw( :ERROR_CODES :CONSTANTS );
+use LWP::Simple ();
+use XML::Simple qw(:strict);
+
 # Assessors
 # alphabetically, case insensitive
 # First section from http://www.thetvdb.com/api/GetSeries.php?seriesname=...
 # Second section from <langauge.xml>
 # Third section are Net::TVDB:: objects
+# Forth section are API values
 use Object::Tiny qw(
   banner
   FirstAired
@@ -47,7 +53,84 @@ use Object::Tiny qw(
   actors
   banners
   episodes
+
+  api_key
+  api_language
+  api_mirrors
 );
+
+# the url for full series data
+use constant URL => '%s/api/%s/series/%s/all/%s.zip';
+
+# xml files in the zip
+use constant ACTORS_XML_FILE  => 'actors.xml';
+use constant BANNERS_XML_FILE => 'banners.xml';
+
+sub fetch {
+    my ($self) = @_;
+
+    # get the zip
+    my $temp = File::Temp->new();
+    unless (
+        LWP::Simple::is_success(
+            LWP::Simple::getstore( $self->_url, $temp->filename )
+        )
+      )
+    {
+        die 'could not get zip file at ' . $self->_url;
+    }
+    my $zip = Archive::Zip->new();
+    unless ( $zip->read( $temp->filename ) == AZ_OK ) {
+        die 'could not read zip at ' . $temp->filename;
+    }
+
+    # parse the xml files
+    my $status;
+    my $xml;
+    my $parsed_xml;
+
+    my $series_xml_file = $self->language . '.xml';
+    ( $xml, $status ) = $zip->contents($series_xml_file);
+    unless ( $status == AZ_OK ) {
+        die 'could not read ' . $series_xml_file;
+    }
+    $parsed_xml = XML::Simple::XMLin(
+        $xml,
+        ForceArray => 0,
+        KeyAttr    => 'Data'
+    );
+    $self->_parse_series_data($parsed_xml);
+
+    ( $xml, $status ) = $zip->contents(ACTORS_XML_FILE);
+    unless ( $status == AZ_OK ) {
+        die 'could not read ' . ACTORS_XML_FILE;
+    }
+    $parsed_xml = XML::Simple::XMLin(
+        $xml,
+        ForceArray => 0,
+        KeyAttr    => 'Actor'
+    );
+    $self->_parse_actors($parsed_xml);
+
+    ( $xml, $status ) = $zip->contents(BANNERS_XML_FILE);
+    unless ( $status == AZ_OK ) {
+        die 'could not read ' . BANNERS_XML_FILE;
+    }
+    $parsed_xml = XML::Simple::XMLin(
+        $xml,
+        ForceArray => 0,
+        KeyAttr    => 'Banner'
+    );
+    $self->_parse_banners($parsed_xml);
+}
+
+# generates the url for full series data
+sub _url {
+    my ($self) = @_;
+    return sprintf( URL,
+        $self->api_mirrors->get_mirror,
+        $self->api_key, $self->seriesid, $self->api_language->{abbreviation} );
+}
 
 # parse <lanugage>.xml
 sub _parse_series_data {
