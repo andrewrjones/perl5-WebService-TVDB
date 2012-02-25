@@ -20,7 +20,7 @@ isa_ok( $series, 'Net::TVDB::Series' );
 ### parse actors.xml
 $xml = XML::Simple::XMLin(
     "$Bin/resources/zip/actors.xml",
-    ForceArray => 0,
+    ForceArray => ['Actor'],
     KeyAttr    => 'Actor'
 );
 $series->_parse_actors($xml);
@@ -39,7 +39,7 @@ is( $actor->Name, 'Caroline Quentin' );
 ### parse banners.xml
 $xml = XML::Simple::XMLin(
     "$Bin/resources/zip/banners.xml",
-    ForceArray => 0,
+    ForceArray => ['Banner'],
     KeyAttr    => 'Banner'
 );
 $series->_parse_banners($xml);
@@ -59,7 +59,7 @@ is( $banner->url, 'http://thetvdb.com/banners/fanart/original/76213-1.jpg' );
 ### parse <language.xml>
 $xml = XML::Simple::XMLin(
     "$Bin/resources/zip/en.xml",
-    ForceArray => 0,
+    ForceArray => ['Data'],
     KeyAttr    => 'Data'
 );
 $series->_parse_series_data($xml);

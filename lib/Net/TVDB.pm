@@ -53,8 +53,13 @@ sub search {
 
     my $xml = LWP::Simple::get( sprintf( SEARCH_URL, $term ) );
     $self->{series} = _parse_series(
-        XML::Simple::XMLin( $xml, ForceArray => 0, KeyAttr => 'Series' ),
-        $self->api_key, $languages->{ $self->language },
+        XML::Simple::XMLin(
+            $xml,
+            ForceArray => ['Series'],
+            KeyAttr    => 'Series'
+        ),
+        $self->api_key,
+        $languages->{ $self->language },
         $self->mirrors
     );
 

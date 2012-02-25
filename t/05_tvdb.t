@@ -26,7 +26,7 @@ is( $api_key, 'ABC123' );
 # test parseing search xml
 my $xml = XML::Simple::XMLin(
     "$Bin/resources/series.xml",
-    ForceArray => 0,
+    ForceArray => ['Series'],
     KeyAttr    => 'Series'
 );
 $series_list = Net::TVDB::_parse_series( $xml, '1234', {}, {} );

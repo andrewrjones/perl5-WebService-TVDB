@@ -8,7 +8,7 @@ package Net::TVDB::Episode;
 # Assessors
 # alphabetically, case insensitive
 use Object::Tiny qw(
-    absolute_number
+  absolute_number
   airsafter_season
   airsbefore_episode
   airsbefore_season
@@ -22,20 +22,20 @@ use Object::Tiny qw(
   EpImgFlag
   EpisodeName
   EpisodeNumber
-filename
+  filename
   FirstAired
   GuestStars
   id
   IMDB_ID
   Language
-lastupdated
+  lastupdated
   Overview
   ProductionCode
   Rating
   RatingCount
-seasonid
+  seasonid
   SeasonNumber
-seriesid
+  seriesid
   Writer
 );
 
