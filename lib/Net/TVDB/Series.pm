@@ -38,6 +38,7 @@ sub _parse_actors {
     return \@actors;
 }
 
+# parse banners.xml
 sub _parse_banners {
     my ($xml) = @_;
 
