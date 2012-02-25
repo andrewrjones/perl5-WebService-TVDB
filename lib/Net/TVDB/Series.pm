@@ -152,7 +152,7 @@ sub _parse_series_data {
 
     # populate extra Series data
     while ( my ( $key, $value ) = each( %{ $xml->{Series} } ) ) {
-        if ( $key eq 'Genre' ) {
+        if ( $key eq 'Genre' || $key eq 'Actors' ) {
             $self->{$key} = pipes_to_array($value);
         }
         else {
