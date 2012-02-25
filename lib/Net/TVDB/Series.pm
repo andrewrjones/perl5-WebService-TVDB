@@ -197,3 +197,117 @@ sub _parse_banners {
 }
 
 1;
+
+__END__
+
+=method fetch
+
+Fecthes the full data from the TVDB, inluding all the episodes.
+
+=method get_episode ( $season_number, $episode_number )
+
+Gets a parcular episode. Returns a Net::TVDB::Episode object.
+
+=attr banner
+
+=attr FirstAired
+
+=attr id
+
+=attr IMDB_ID
+
+=attr language
+
+=attr Overview
+
+=attr seriesid
+
+=attr SeriesName
+
+=attr zap2it_id
+
+=attr added
+
+Populated after fetch
+
+=attr addedBy
+
+Populated after fetch
+
+=attr Actors
+
+Populated after fetch
+
+=attr Airs_DayOfWeek
+
+Populated after fetch
+
+=attr Airs_Time
+
+Populated after fetch
+
+=attr ContentRating
+
+Populated after fetch
+
+=attr fanart
+
+Populated after fetch
+
+=attr Genre
+
+Populated after fetch
+
+=attr Language
+
+Populated after fetch
+
+=attr lastupdated
+
+Populated after fetch
+
+=attr Network
+
+Populated after fetch
+
+=attr NetworkID
+
+Populated after fetch
+
+=attr poster
+
+Populated after fetch
+
+=attr Rating
+
+Populated after fetch
+
+=attr RatingCount
+
+Populated after fetch
+
+=attr Runtime
+
+Populated after fetch
+
+=attr SeriesID
+
+Populated after fetch
+
+=attr Status
+
+Populated after fetch
+
+=attr actors
+
+An array of Net::TVDB::Actor objects. Poplated after fetch.
+
+=attr banners
+
+An array of Net::TVDB::Banner objects. Poplated after fetch.
+
+=attr episodes
+
+An array of Net::TVDB::Episode objects. Poplated after fetch.
+
+=cut

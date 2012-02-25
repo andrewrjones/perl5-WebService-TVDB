@@ -30,3 +30,31 @@ sub url {
 }
 
 1;
+
+__END__
+
+=attr BannerPath
+
+=attr BannerType
+
+=attr BannerType2
+
+=attr Colors
+
+=attr id
+
+=attr Language
+
+=attr Rating
+
+=attr RatingCount
+
+=attr Season
+
+=attr SeriesName
+
+=attr ThumbnailPath
+
+=attr VignettePath
+
+=cut

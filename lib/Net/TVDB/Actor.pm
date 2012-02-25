@@ -16,3 +16,17 @@ use Object::Tiny qw(
 );
 
 1;
+
+__END__
+
+=attr id
+
+=attr Image
+
+=attr Name
+
+=attr Role
+
+=attr SortOrder
+
+=cut

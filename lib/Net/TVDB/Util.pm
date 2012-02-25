@@ -21,3 +21,17 @@ sub pipes_to_array {
 
     return \@array;
 }
+
+__END__
+
+=head1 SYNOPSIS
+
+  use Net::TVDB::Util qw(pipes_to_array);
+
+=method
+
+pipes_to_array($string)
+
+Takes a string such as "|Comedy|Action|" and returns an array without the pipes.
+
+=cut

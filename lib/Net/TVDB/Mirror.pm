@@ -55,7 +55,7 @@ sub get_mirror {
   
 =method new()
 
-Create new object. Takes no arguments.
+Create a new object. Takes no arguments.
 
 =method fetch_mirror_list($api_key)
 

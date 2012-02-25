@@ -45,6 +45,10 @@ sub get_servertime {
   $servertime->fetch_servertime();
   my $previous_time = $servertime->get_servertime();
   
+=head1 DESCRIPTION
+
+This is not used by default, but would be handy if you are keeping a cache and want to know when to update it.
+
 =method new()
 
 Create new object. Takes no arguments.

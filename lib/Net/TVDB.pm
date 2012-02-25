@@ -148,3 +148,31 @@ __END__
 =head1 DESCRIPTION
 
 Net::TVDB is an interface to L<http://thetvdb.com/>.
+
+=head1 API KEY
+
+To use this module, you will need an API key from http://thetvdb.com/?tab=apiregister.
+
+You can pass this key into the constructor, or save it to ~/.tvdb.
+
+=method new
+
+Creates a new NET::TVDB object. Takes the following parameters:
+
+=over 4
+
+=item api_key
+
+This is your API key. If not passed in here, we will look in ~/.tvdb. Otherwise we will die.
+
+=item language
+
+The language you want tour results in. See Net::TVDB::Languages for a list of languages. Defaults to English.
+
+=back
+
+=method search( $term )
+
+Searches the TVDB and returns a list of Net::TVDB::Series as the result.
+
+=cut
