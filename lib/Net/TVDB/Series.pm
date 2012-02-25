@@ -7,10 +7,13 @@ package Net::TVDB::Series;
 
 use Net::TVDB::Actor;
 use Net::TVDB::Banner;
+use Net::TVDB::Episode;
 
 # Assessors
 # alphabetically, case insensitive
-# from http://www.thetvdb.com/api/GetSeries.php?seriesname=...
+# First section from http://www.thetvdb.com/api/GetSeries.php?seriesname=...
+# Second section from <langauge.xml>
+# Third section are Net::TVDB:: objects
 use Object::Tiny qw(
   banner
   FirstAired
@@ -22,9 +25,48 @@ use Object::Tiny qw(
   SeriesName
   zap2it_id
 
+  added
+  addedBy
+  Actors
+  Airs_DayOfWeek
+  Airs_Time
+  ContentRating
+  fanart
+  Genre
+  Language
+  lastupdated
+  Network
+  NetworkID
+  poster
+  Rating
+  RatingCount
+  Runtime
+  SeriesID
+  Status
+
   actors
   banners
+  episodes
 );
+
+# parse <lanugage>.xml
+sub _parse_series_data {
+    my ( $self, $xml ) = @_;
+
+    # populate extra Series data
+    while ( my ( $key, $value ) = each( %{ $xml->{Series} } ) ) {
+        $self->{$key} = $value;
+    }
+
+    # populate Episodes
+    my @episodes;
+    for ( @{ $xml->{Episode} } ) {
+        push @episodes, Net::TVDB::Episode->new( %{$_} );
+
+    }
+    $self->{episodes} = \@episodes;
+    return $self->{episodes};
+}
 
 # parse actors.xml
 sub _parse_actors {

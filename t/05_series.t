@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 35;
+use Test::More tests => 97;
 
 use FindBin qw($Bin);
 use XML::Simple qw(:strict);
@@ -11,13 +11,14 @@ use XML::Simple qw(:strict);
 BEGIN { use_ok('Net::TVDB::Series'); }
 
 my $series;    # Net::TVDB::Series object
+my $xml;       # parsed xml data
 
-# empty new
+### empty new
 $series = Net::TVDB::Series->new();
 isa_ok( $series, 'Net::TVDB::Series' );
 
-# parse actors.xml
-my $xml = XML::Simple::XMLin(
+### parse actors.xml
+$xml = XML::Simple::XMLin(
     "$Bin/resources/zip/actors.xml",
     ForceArray => 0,
     KeyAttr    => 'Actor'
@@ -25,6 +26,7 @@ my $xml = XML::Simple::XMLin(
 $series->_parse_actors($xml);
 my $actors = $series->actors;
 is( @$actors, 7, '7 actors' );
+
 for ( @{$actors} ) {
     isa_ok( $_, 'Net::TVDB::Actor' );
 }
@@ -34,7 +36,7 @@ my $actor = @{$actors}[0];
 is( $actor->id,   44200 );
 is( $actor->Name, 'Caroline Quentin' );
 
-# parse banners.xml
+### parse banners.xml
 $xml = XML::Simple::XMLin(
     "$Bin/resources/zip/banners.xml",
     ForceArray => 0,
@@ -43,6 +45,7 @@ $xml = XML::Simple::XMLin(
 $series->_parse_banners($xml);
 my $banners = $series->banners;
 is( @$banners, 20, '20 banners' );
+
 for ( @{$banners} ) {
     isa_ok( $_, 'Net::TVDB::Banner' );
 }
@@ -51,3 +54,25 @@ for ( @{$banners} ) {
 my $banner = @{$banners}[0];
 is( $banner->id,         22614 );
 is( $banner->BannerType, 'fanart' );
+
+### parse <language.xml>
+$xml = XML::Simple::XMLin(
+    "$Bin/resources/zip/en.xml",
+    ForceArray => 0,
+    KeyAttr    => 'Data'
+);
+$series->_parse_series_data($xml);
+
+is( $series->Status, 'Ended' );
+is( $series->Rating, '8.4' );     # it's pretty good!
+
+my $episodes = $series->episodes;
+is( @$episodes, 57, '57 episodes' );
+for ( @{$episodes} ) {
+    isa_ok( $_, 'Net::TVDB::Episode' );
+}
+
+# check order
+my $episode = @{$episodes}[0];
+is( $episode->id,          342429 );
+is( $episode->EpisodeName, 'Children in Need Special' );
