@@ -39,4 +39,11 @@ use Object::Tiny qw(
   seriesid
 );
 
+sub year {
+    my ($self) = @_;
+    if ( $self->FirstAired =~ /^(\d{4})-\d{2}-\d{2}$/ ) {
+        return $1;
+    }
+}
+
 1;
