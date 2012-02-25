@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 97;
+use Test::More tests => 98;
 
 use FindBin qw($Bin);
 use XML::Simple qw(:strict);
@@ -54,6 +54,7 @@ for ( @{$banners} ) {
 my $banner = @{$banners}[0];
 is( $banner->id,         22614 );
 is( $banner->BannerType, 'fanart' );
+is( $banner->url, 'http://thetvdb.com/banners/fanart/original/76213-1.jpg' );
 
 ### parse <language.xml>
 $xml = XML::Simple::XMLin(

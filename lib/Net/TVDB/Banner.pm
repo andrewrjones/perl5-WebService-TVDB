@@ -21,4 +21,11 @@ use Object::Tiny qw(
   VignettePath
 );
 
+use constant URL => 'http://thetvdb.com/banners/%s';
+
+sub url {
+    my ($self) = @_;
+    return sprintf( URL, $self->BannerPath );
+}
+
 1;
