@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 99;
+use Test::More tests => 100;
 
 use FindBin qw($Bin);
 use XML::Simple qw(:strict);
@@ -64,8 +64,9 @@ $xml = XML::Simple::XMLin(
 );
 $series->_parse_series_data($xml);
 
-is( $series->Status, 'Ended' );
-is( $series->Rating, '8.4' );     # it's pretty good!
+is( $series->Status,     'Ended' );
+is( $series->Rating,     '8.4' );      # it's pretty good!
+is( $series->Genre->[0], 'Comedy' );
 
 my $episodes = $series->episodes;
 is( @$episodes, 57, '57 episodes' );

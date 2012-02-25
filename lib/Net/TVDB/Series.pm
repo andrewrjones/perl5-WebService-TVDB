@@ -8,6 +8,7 @@ package Net::TVDB::Series;
 use Net::TVDB::Actor;
 use Net::TVDB::Banner;
 use Net::TVDB::Episode;
+use Net::TVDB::Util qw(pipes_to_array);
 
 use File::Temp ();
 use Archive::Zip qw( :ERROR_CODES :CONSTANTS );
@@ -151,7 +152,12 @@ sub _parse_series_data {
 
     # populate extra Series data
     while ( my ( $key, $value ) = each( %{ $xml->{Series} } ) ) {
-        $self->{$key} = $value;
+        if ( $key eq 'Genre' ) {
+            $self->{$key} = pipes_to_array($value);
+        }
+        else {
+            $self->{$key} = $value;
+        }
     }
 
     # populate Episodes
