@@ -207,7 +207,7 @@ Fecthes the full data from the TVDB, inluding all the episodes.
 
 =method get_episode ( $season_number, $episode_number )
 
-Gets a parcular episode. Returns a Net::TVDB::Episode object.
+Gets a parcular episode. Returns a L<Net::TVDB::Episode> object.
 
 =attr banner
 
@@ -301,14 +301,14 @@ Populated after fetch
 
 =attr actors
 
-An array of Net::TVDB::Actor objects. Poplated after fetch.
+An array of L<Net::TVDB::Actor> objects. Populated after fetch.
 
 =attr banners
 
-An array of Net::TVDB::Banner objects. Poplated after fetch.
+An array of L<Net::TVDB::Banner> objects. Populated after fetch.
 
 =attr episodes
 
-An array of Net::TVDB::Episode objects. Poplated after fetch.
+An array of L<Net::TVDB::Episode> objects. Populated after fetch.
 
 =cut

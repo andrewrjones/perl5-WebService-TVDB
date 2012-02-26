@@ -171,12 +171,12 @@ This is your API key. If not passed in here, we will look in ~/.tvdb. Otherwise 
 
 =item language
 
-The language you want tour results in. See Net::TVDB::Languages for a list of languages. Defaults to English.
+The language you want tour results in. L<See Net::TVDB::Languages> for a list of languages. Defaults to English.
 
 =back
 
 =method search( $term )
 
-Searches the TVDB and returns a list of Net::TVDB::Series as the result.
+Searches the TVDB and returns a list of L<Net::TVDB::Series> as the result.
 
 =cut
