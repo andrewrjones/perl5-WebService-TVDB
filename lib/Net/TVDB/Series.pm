@@ -55,9 +55,9 @@ use Object::Tiny qw(
   banners
   episodes
 
-  api_key
-  api_language
-  api_mirrors
+  _api_key
+  _api_language
+  _api_mirrors
 );
 
 # the url for full series data
@@ -142,8 +142,9 @@ sub get_episode {
 sub _url {
     my ($self) = @_;
     return sprintf( URL,
-        $self->api_mirrors->get_mirror,
-        $self->api_key, $self->seriesid, $self->api_language->{abbreviation} );
+        $self->_api_mirrors->get_mirror,
+        $self->_api_key, $self->seriesid,
+        $self->_api_language->{abbreviation} );
 }
 
 # parse <lanugage>.xml

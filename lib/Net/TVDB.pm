@@ -20,7 +20,6 @@ use constant API_KEY_FILE => '/.tvdb';
 use Object::Tiny qw(
   api_key
   language
-  mirrors
 );
 
 sub new {
@@ -47,7 +46,7 @@ sub search {
     unless ($term) {
         die 'search term is required';
     }
-    unless ( $self->mirrors ) {
+    unless ( $self->{mirrors} ) {
         $self->_load_mirros();
     }
 
@@ -60,7 +59,7 @@ sub search {
         ),
         $self->api_key,
         $languages->{ $self->language },
-        $self->mirrors
+        $self->{mirrors}
     );
 
     return $self->{series};
@@ -76,9 +75,9 @@ sub _parse_series {
         push @series,
           Net::TVDB::Series->new(
             %$_,
-            api_key      => $api_key,
-            api_language => $api_language,
-            api_mirrors  => $api_mirrors
+            _api_key      => $api_key,
+            _api_language => $api_language,
+            _api_mirrors  => $api_mirrors
           );
     }
 

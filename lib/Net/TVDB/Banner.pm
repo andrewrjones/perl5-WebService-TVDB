@@ -57,4 +57,8 @@ __END__
 
 =attr VignettePath
 
+=method url
+
+Generates the URL for the banner.
+
 =cut

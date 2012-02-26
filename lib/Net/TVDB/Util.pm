@@ -28,9 +28,7 @@ __END__
 
   use Net::TVDB::Util qw(pipes_to_array);
 
-=method
-
-pipes_to_array($string)
+=method pipes_to_array($string)
 
 Takes a string such as "|Comedy|Action|" and returns an array without the pipes.
 
