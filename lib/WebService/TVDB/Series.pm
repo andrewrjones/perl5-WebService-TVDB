@@ -1,14 +1,14 @@
 use strict;
 use warnings;
 
-package Net::TVDB::Series;
+package WebService::TVDB::Series;
 
 # ABSTRACT: Represents a TV Series
 
-use Net::TVDB::Actor;
-use Net::TVDB::Banner;
-use Net::TVDB::Episode;
-use Net::TVDB::Util qw(pipes_to_array);
+use WebService::TVDB::Actor;
+use WebService::TVDB::Banner;
+use WebService::TVDB::Episode;
+use WebService::TVDB::Util qw(pipes_to_array);
 
 use File::Temp ();
 use Archive::Zip qw( :ERROR_CODES :CONSTANTS );
@@ -19,7 +19,7 @@ use XML::Simple qw(:strict);
 # alphabetically, case insensitive
 # First section from http://www.thetvdb.com/api/GetSeries.php?seriesname=...
 # Second section from <langauge.xml>
-# Third section are Net::TVDB:: objects
+# Third section are WebService::TVDB:: objects
 # Forth section are API values
 use Object::Tiny qw(
   banner
@@ -164,7 +164,7 @@ sub _parse_series_data {
     # populate Episodes
     my @episodes;
     for ( @{ $xml->{Episode} } ) {
-        push @episodes, Net::TVDB::Episode->new( %{$_} );
+        push @episodes, WebService::TVDB::Episode->new( %{$_} );
 
     }
     $self->{episodes} = \@episodes;
@@ -177,7 +177,7 @@ sub _parse_actors {
 
     my @actors;
     for ( @{ $xml->{Actor} } ) {
-        push @actors, Net::TVDB::Actor->new( %{$_} );
+        push @actors, WebService::TVDB::Actor->new( %{$_} );
 
     }
     $self->{actors} = \@actors;
@@ -190,7 +190,7 @@ sub _parse_banners {
 
     my @banners;
     for ( @{ $xml->{Banner} } ) {
-        push @banners, Net::TVDB::Banner->new( %{$_} );
+        push @banners, WebService::TVDB::Banner->new( %{$_} );
 
     }
     $self->{banners} = \@banners;
@@ -207,7 +207,7 @@ Fecthes the full data from the TVDB, inluding all the episodes.
 
 =method get_episode ( $season_number, $episode_number )
 
-Gets a parcular episode. Returns a L<Net::TVDB::Episode> object.
+Gets a parcular episode. Returns a L<WebService::TVDB::Episode> object.
 
 =attr banner
 
@@ -301,14 +301,14 @@ Populated after fetch
 
 =attr actors
 
-An array of L<Net::TVDB::Actor> objects. Populated after fetch.
+An array of L<WebService::TVDB::Actor> objects. Populated after fetch.
 
 =attr banners
 
-An array of L<Net::TVDB::Banner> objects. Populated after fetch.
+An array of L<WebService::TVDB::Banner> objects. Populated after fetch.
 
 =attr episodes
 
-An array of L<Net::TVDB::Episode> objects. Populated after fetch.
+An array of L<WebService::TVDB::Episode> objects. Populated after fetch.
 
 =cut

@@ -1,4 +1,4 @@
-package Net::TVDB::Util;
+package WebService::TVDB::Util;
 
 use strict;
 use warnings;
@@ -26,7 +26,7 @@ __END__
 
 =head1 SYNOPSIS
 
-  use Net::TVDB::Util qw(pipes_to_array);
+  use WebService::TVDB::Util qw(pipes_to_array);
 
 =method pipes_to_array($string)
 

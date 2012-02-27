@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-package Net::TVDB::Servertime;
+package WebService::TVDB::Servertime;
 
 # ABSTRACT: Gets and saves the TVDB servertime
 
@@ -41,7 +41,7 @@ sub get_servertime {
 
 =head1 SYNOPSIS
 
-  my $servertime = Net::TVDB::Servertime->new();
+  my $servertime = WebService::TVDB::Servertime->new();
   $servertime->fetch_servertime();
   my $previous_time = $servertime->get_servertime();
   

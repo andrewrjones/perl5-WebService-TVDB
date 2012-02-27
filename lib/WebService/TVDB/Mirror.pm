@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-package Net::TVDB::Mirror;
+package WebService::TVDB::Mirror;
 
 # ABSTRACT: Gets and saves a mirror
 
@@ -49,7 +49,7 @@ sub get_mirror {
 
 =head1 SYNOPSIS
 
-  my $mirror = Net::TVDB::Mirror->new();
+  my $mirror = WebService::TVDB::Mirror->new();
   $mirror->fetch_mirror_list('1234abcd');
   my $mirror_url = $mirror->get_mirror();
   

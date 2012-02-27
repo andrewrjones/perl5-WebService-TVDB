@@ -3,25 +3,31 @@ use lib "$Bin/../lib/";
 
 use Code::Generator::Perl;
 use LWP::Simple ();
-use XML::Simple ();
+use XML::Simple qw(:strict);
 use DateTime;
 use File::HomeDir;
-use Net::TVDB;
+use WebService::TVDB;
 
 # Get the current list of languages
 my $api_key_file = File::HomeDir->my_home . '/.tvdb';
 die 'Can not get API key' unless -e $api_key_file;
-my $api_key = Net::TVDB::_get_api_key_from_file($api_key_file);
+my $api_key = WebService::TVDB::_get_api_key_from_file($api_key_file);
 my $xml = LWP::Simple::get("http://www.thetvdb.com/api/$api_key/languages.xml");
 die 'Could not get XML' unless $xml;
-my $languages = XML::Simple::XMLin($xml);
+my $parsed_xml = XML::Simple::XMLin(
+    $xml,
+    ForceArray => ['Language'],
+    KeyAttr    => 'Language'
+);
+
+my %languages = map { $_->{name} => $_ } @{ $parsed_xml->{Language} };
 
 # Generate the package
 my $generator = new Code::Generator::Perl(
     outdir       => "$Bin/../lib/",
     generated_by => 'tools/generate-languages.pl'
 );
-$generator->new_package('Net::TVDB::Languages');
+$generator->new_package('WebService::TVDB::Languages');
 
 $generator->add_comment(
     'ABSTRACT: A list of languages supported by thetvdb.com');
@@ -34,14 +40,14 @@ our @EXPORT_OK = qw($languages);
 HERE
 $generator->_add_content($export);
 
-$generator->add( languages => $languages->{Language} );
+$generator->add( languages => \%languages );
 
 # Generate the POD
 my $now = DateTime->now->ymd;
 my $pod = <<"HERE";
 =head1 SYNOPSIS
 
-  use Net::TVDB::Languages qw(\$languages);
+  use WebService::TVDB::Languages qw(\$languages);
 
 =head1 DESCRIPTION
 
@@ -53,7 +59,7 @@ They are as follows:
 
 HERE
 
-for ( keys %{ $languages->{Language} } ) {
+for ( keys %languages ) {
     $pod .= <<"HERE";
 =item *
 

@@ -5,7 +5,7 @@ use warnings;
 
 use Test::More tests => 5;
 
-BEGIN { use_ok( 'Net::TVDB::Languages', qw($languages) ); }
+BEGIN { use_ok( 'WebService::TVDB::Languages', qw($languages) ); }
 
 ok( $languages, '$languages is exported' );
 

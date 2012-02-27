@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-package Net::TVDB::Episode;
+package WebService::TVDB::Episode;
 
 # ABSTRACT: Represents an Episode
 
@@ -49,10 +49,6 @@ sub year {
 1;
 
 __END__
-
-=head1 SYNOPSIS
-
-  my $episode = App::MP4Meta::Source::Data::TVEpisode->new(%data);
 
 =attr absolute_number
 

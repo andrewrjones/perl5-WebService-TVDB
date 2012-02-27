@@ -22,15 +22,15 @@ else {
     }
 }
 
-use Net::TVDB;
+use WebService::TVDB;
 
-my $tvdb = Net::TVDB->new();
+my $tvdb = WebService::TVDB->new();
 
 # do a search for series
 my $series_list = $tvdb->search('men behaving badly');
 is( @{$series_list}, 2, 'two series results' );
 my $series = @{$series_list}[0];
-isa_ok( $series, 'Net::TVDB::Series' );
+isa_ok( $series, 'WebService::TVDB::Series' );
 is( $series->SeriesName, 'Men Behaving Badly' );
 
 $series->fetch();
@@ -40,7 +40,7 @@ is( $series->Status, 'Ended' );
 my $episodes = $series->episodes;
 is( @$episodes, 57, '57 episodes' );
 for ( @{$episodes} ) {
-    isa_ok( $_, 'Net::TVDB::Episode' );
+    isa_ok( $_, 'WebService::TVDB::Episode' );
 }
 
 # check order
@@ -53,7 +53,7 @@ my $actors = $series->actors;
 is( @$actors, 7, '7 actors' );
 
 for ( @{$actors} ) {
-    isa_ok( $_, 'Net::TVDB::Actor' );
+    isa_ok( $_, 'WebService::TVDB::Actor' );
 }
 
 # check order
@@ -66,7 +66,7 @@ my $banners = $series->banners;
 is( @$banners, 20, '20 banners' );
 
 for ( @{$banners} ) {
-    isa_ok( $_, 'Net::TVDB::Banner' );
+    isa_ok( $_, 'WebService::TVDB::Banner' );
 }
 
 # check order

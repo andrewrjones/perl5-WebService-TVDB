@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-package Net::TVDB::Banner;
+package WebService::TVDB::Banner;
 
 # ABSTRACT: Represents a Banner
 

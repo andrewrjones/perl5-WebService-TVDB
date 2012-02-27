@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-package Net::TVDB::Actor;
+package WebService::TVDB::Actor;
 
 # ABSTRACT: Represents an Actor
 

@@ -5,10 +5,10 @@ use warnings;
 
 use Test::More tests => 2;
 
-BEGIN { use_ok('Net::TVDB::Banner'); }
+BEGIN { use_ok('WebService::TVDB::Banner'); }
 
-my $banner;    # Net::TVDB::Banner object
+my $banner;    # WebService::TVDB::Banner object
 
 # empty new
-$banner = Net::TVDB::Banner->new();
-isa_ok( $banner, 'Net::TVDB::Banner' );
+$banner = WebService::TVDB::Banner->new();
+isa_ok( $banner, 'WebService::TVDB::Banner' );

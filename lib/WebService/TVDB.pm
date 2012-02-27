@@ -1,13 +1,13 @@
 use strict;
 use warnings;
 
-package Net::TVDB;
+package WebService::TVDB;
 
 # ABSTRACT: Interface to http://thetvdb.com/
 
-use Net::TVDB::Languages qw($languages);
-use Net::TVDB::Series;
-use Net::TVDB::Mirror;
+use WebService::TVDB::Languages qw($languages);
+use WebService::TVDB::Series;
+use WebService::TVDB::Mirror;
 
 use LWP::Simple ();
 use XML::Simple qw(:strict);
@@ -65,7 +65,7 @@ sub search {
     return $self->{series};
 }
 
-# parse the series xml and return an array of Net::TVDB::Series
+# parse the series xml and return an array of WebService::TVDB::Series
 sub _parse_series {
     my ( $xml, $api_key, $api_language, $api_mirrors ) = @_;
 
@@ -73,7 +73,7 @@ sub _parse_series {
     my @series;
     for ( @{ $xml->{Series} } ) {
         push @series,
-          Net::TVDB::Series->new(
+          WebService::TVDB::Series->new(
             %$_,
             _api_key      => $api_key,
             _api_language => $api_language,
@@ -88,7 +88,7 @@ sub _parse_series {
 sub _load_mirros {
     my ($self) = @_;
 
-    my $mirrors = Net::TVDB::Mirror->new();
+    my $mirrors = WebService::TVDB::Mirror->new();
     $mirrors->fetch_mirror_list( $self->api_key );
     $self->{mirrors} = $mirrors;
 }
@@ -116,12 +116,12 @@ __END__
 
 =head1 SYNOPSIS
 
-  my $tvdb = Net::TVDB->new(api_key => 'ABC123', language => 'English');
+  my $tvdb = WebService::TVDB->new(api_key => 'ABC123', language => 'English');
 
   my $series_list = $tvdb->search('men behaving badly');
 
   my $series = @{$series_list}[0];
-  # $series is a Net::TVDB::Series
+  # $series is a WebService::TVDB::Series
   say $series->SeriesName;
   say $series->overview;
 
@@ -132,26 +132,26 @@ __END__
   say $series->Status;
 
   for my $episode (@{ $series->episodes }){
-    # $episode is a Net::TVDB::Episode
+    # $episode is a WebService::TVDB::Episode
     say $episode->Overview;
     say $episode->FirstAired;
   }
 
   for my $actor (@{ $series->actors }){
-    # $actor is a Net::TVDB::Actor
+    # $actor is a WebService::TVDB::Actor
     say $actor->Name;
     say $actor->Role;
   }
 
   for my $banner (@{ $series->banners }){
-    # $banner is a Net::TVDB::Banner
+    # $banner is a WebService::TVDB::Banner
     say $banner->Rating;
     say $banner->url;
   }
 
 =head1 DESCRIPTION
 
-Net::TVDB is an interface to L<http://thetvdb.com/>.
+WebService::TVDB is an interface to L<http://thetvdb.com/>.
 
 =head1 API KEY
 
@@ -161,7 +161,7 @@ You can pass this key into the constructor, or save it to ~/.tvdb.
 
 =method new
 
-Creates a new NET::TVDB object. Takes the following parameters:
+Creates a new WebService::TVDB object. Takes the following parameters:
 
 =over 4
 
@@ -171,12 +171,12 @@ This is your API key. If not passed in here, we will look in ~/.tvdb. Otherwise 
 
 =item language
 
-The language you want tour results in. L<See Net::TVDB::Languages> for a list of languages. Defaults to English.
+The language you want tour results in. L<See WebService::TVDB::Languages> for a list of languages. Defaults to English.
 
 =back
 
 =method search( $term )
 
-Searches the TVDB and returns a list of L<Net::TVDB::Series> as the result.
+Searches the TVDB and returns a list of L<WebService::TVDB::Series> as the result.
 
 =cut

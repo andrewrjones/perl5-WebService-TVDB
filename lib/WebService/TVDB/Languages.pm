@@ -1,4 +1,4 @@
-package Net::TVDB::Languages;
+package WebService::TVDB::Languages;
 
 use strict;
 use warnings;
@@ -13,107 +13,131 @@ our @EXPORT_OK = qw($languages);
 
 our $languages = {
     "Portugu\x{ea}s" => {
-        'abbreviation' => 'pt',
-        'id'           => '26'
+        'name'         => "Portugu\x{ea}s",
+        'id'           => '26',
+        'abbreviation' => 'pt'
     },
     'Polski' => {
-        'abbreviation' => 'pl',
-        'id'           => '18'
+        'name'         => 'Polski',
+        'id'           => '18',
+        'abbreviation' => 'pl'
     },
     "T\x{fc}rk\x{e7}e" => {
-        'abbreviation' => 'tr',
-        'id'           => '21'
+        'name'         => "T\x{fc}rk\x{e7}e",
+        'id'           => '21',
+        'abbreviation' => 'tr'
     },
     " \x{5e2}\x{5d1}\x{5e8}\x{5d9}\x{5ea}" => {
-        'abbreviation' => 'he',
-        'id'           => '24'
+        'name'         => " \x{5e2}\x{5d1}\x{5e8}\x{5d9}\x{5ea}",
+        'id'           => '24',
+        'abbreviation' => 'he'
     },
     'Norsk' => {
-        'abbreviation' => 'no',
-        'id'           => '9'
+        'name'         => 'Norsk',
+        'id'           => '9',
+        'abbreviation' => 'no'
     },
 "\x{440}\x{443}\x{441}\x{441}\x{43a}\x{438}\x{439} \x{44f}\x{437}\x{44b}\x{43a}"
       => {
-        'abbreviation' => 'ru',
-        'id'           => '22'
+        'name' =>
+"\x{440}\x{443}\x{441}\x{441}\x{43a}\x{438}\x{439} \x{44f}\x{437}\x{44b}\x{43a}",
+        'id'           => '22',
+        'abbreviation' => 'ru'
       },
     "\x{65e5}\x{672c}\x{8a9e}" => {
-        'abbreviation' => 'ja',
-        'id'           => '25'
+        'name'         => "\x{65e5}\x{672c}\x{8a9e}",
+        'id'           => '25',
+        'abbreviation' => 'ja'
     },
     "\x{395}\x{3bb}\x{3bb}\x{3b7}\x{3bd}\x{3b9}\x{3ba}\x{3ac}" => {
-        'abbreviation' => 'el',
-        'id'           => '20'
+        'name' => "\x{395}\x{3bb}\x{3bb}\x{3b7}\x{3bd}\x{3b9}\x{3ba}\x{3ac}",
+        'id'   => '20',
+        'abbreviation' => 'el'
     },
     'Magyar' => {
-        'abbreviation' => 'hu',
-        'id'           => '19'
+        'name'         => 'Magyar',
+        'id'           => '19',
+        'abbreviation' => 'hu'
     },
     'English' => {
-        'abbreviation' => 'en',
-        'id'           => '7'
+        'name'         => 'English',
+        'id'           => '7',
+        'abbreviation' => 'en'
     },
     'Italiano' => {
-        'abbreviation' => 'it',
-        'id'           => '15'
+        'name'         => 'Italiano',
+        'id'           => '15',
+        'abbreviation' => 'it'
     },
     'Hrvatski' => {
-        'abbreviation' => 'hr',
-        'id'           => '31'
+        'name'         => 'Hrvatski',
+        'id'           => '31',
+        'abbreviation' => 'hr'
     },
     "Fran\x{e7}ais" => {
-        'abbreviation' => 'fr',
-        'id'           => '17'
+        'name'         => "Fran\x{e7}ais",
+        'id'           => '17',
+        'abbreviation' => 'fr'
     },
     "\x{d55c}\x{ad6d}\x{c5b4}" => {
-        'abbreviation' => 'ko',
-        'id'           => '32'
+        'name'         => "\x{d55c}\x{ad6d}\x{c5b4}",
+        'id'           => '32',
+        'abbreviation' => 'ko'
     },
     'Svenska' => {
-        'abbreviation' => 'sv',
-        'id'           => '8'
+        'name'         => 'Svenska',
+        'id'           => '8',
+        'abbreviation' => 'sv'
     },
     "Espa\x{f1}ol" => {
-        'abbreviation' => 'es',
-        'id'           => '16'
+        'name'         => "Espa\x{f1}ol",
+        'id'           => '16',
+        'abbreviation' => 'es'
     },
     'Deutsch' => {
-        'abbreviation' => 'de',
-        'id'           => '14'
+        'name'         => 'Deutsch',
+        'id'           => '14',
+        'abbreviation' => 'de'
     },
     "\x{10d}e\x{161}tina" => {
-        'abbreviation' => 'cs',
-        'id'           => '28'
+        'name'         => "\x{10d}e\x{161}tina",
+        'id'           => '28',
+        'abbreviation' => 'cs'
     },
     'Nederlands' => {
-        'abbreviation' => 'nl',
-        'id'           => '13'
+        'name'         => 'Nederlands',
+        'id'           => '13',
+        'abbreviation' => 'nl'
     },
     'Slovenski' => {
-        'abbreviation' => 'sl',
-        'id'           => '30'
+        'name'         => 'Slovenski',
+        'id'           => '30',
+        'abbreviation' => 'sl'
     },
     'Suomeksi' => {
-        'abbreviation' => 'fi',
-        'id'           => '11'
+        'name'         => 'Suomeksi',
+        'id'           => '11',
+        'abbreviation' => 'fi'
     },
     'Dansk' => {
-        'abbreviation' => 'da',
-        'id'           => '10'
+        'name'         => 'Dansk',
+        'id'           => '10',
+        'abbreviation' => 'da'
     },
     "\x{4e2d}\x{6587}" => {
-        'abbreviation' => 'zh',
-        'id'           => '27'
+        'name'         => "\x{4e2d}\x{6587}",
+        'id'           => '27',
+        'abbreviation' => 'zh'
     }
 };
 
 =head1 SYNOPSIS
 
-  use Net::TVDB::Languages qw($languages);
+  use WebService::TVDB::Languages qw($languages);
 
 =head1 DESCRIPTION
 
-This contains all the langauges supported by http://thetvdb.com as of 2012-02-22.
+This contains all the languages supported by http://thetvdb.com as of 2012-02-27.
 
 They are as follows:
 

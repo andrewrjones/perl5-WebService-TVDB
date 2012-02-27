@@ -8,14 +8,14 @@ use Test::More tests => 101;
 use FindBin qw($Bin);
 use XML::Simple qw(:strict);
 
-BEGIN { use_ok('Net::TVDB::Series'); }
+BEGIN { use_ok('WebService::TVDB::Series'); }
 
-my $series;    # Net::TVDB::Series object
+my $series;    # WebService::TVDB::Series object
 my $xml;       # parsed xml data
 
 ### empty new
-$series = Net::TVDB::Series->new();
-isa_ok( $series, 'Net::TVDB::Series' );
+$series = WebService::TVDB::Series->new();
+isa_ok( $series, 'WebService::TVDB::Series' );
 
 ### parse actors.xml
 $xml = XML::Simple::XMLin(
@@ -28,7 +28,7 @@ my $actors = $series->actors;
 is( @$actors, 7, '7 actors' );
 
 for ( @{$actors} ) {
-    isa_ok( $_, 'Net::TVDB::Actor' );
+    isa_ok( $_, 'WebService::TVDB::Actor' );
 }
 
 # check order
@@ -47,7 +47,7 @@ my $banners = $series->banners;
 is( @$banners, 20, '20 banners' );
 
 for ( @{$banners} ) {
-    isa_ok( $_, 'Net::TVDB::Banner' );
+    isa_ok( $_, 'WebService::TVDB::Banner' );
 }
 
 # check order
@@ -72,7 +72,7 @@ is( $series->Actors->[0], 'Caroline Quentin' );
 my $episodes = $series->episodes;
 is( @$episodes, 57, '57 episodes' );
 for ( @{$episodes} ) {
-    isa_ok( $_, 'Net::TVDB::Episode' );
+    isa_ok( $_, 'WebService::TVDB::Episode' );
 }
 
 # check order

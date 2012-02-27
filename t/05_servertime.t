@@ -8,14 +8,14 @@ use Test::More tests => 3;
 use XML::Simple qw(:strict);
 use FindBin qw($Bin);
 
-BEGIN { use_ok('Net::TVDB::Servertime'); }
+BEGIN { use_ok('WebService::TVDB::Servertime'); }
 
-my $servertime;       # Net::TVDB::Servertime object
+my $servertime;       # WebService::TVDB::Servertime object
 my $previous_time;    # previous server time
 
 # get a new object
-$servertime = Net::TVDB::Servertime->new();
-isa_ok( $servertime, 'Net::TVDB::Servertime' );
+$servertime = WebService::TVDB::Servertime->new();
+isa_ok( $servertime, 'WebService::TVDB::Servertime' );
 
 # test getting a mirror from XML
 $servertime->{parsed_xml} = XML::Simple::XMLin(

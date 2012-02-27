@@ -10,16 +10,16 @@ use XML::Simple qw(:strict);
 use FindBin qw($Bin);
 use File::HomeDir;
 
-use Net::TVDB;
+use WebService::TVDB;
 
-BEGIN { use_ok('Net::TVDB::Mirror'); }
+BEGIN { use_ok('WebService::TVDB::Mirror'); }
 
-my $mirror;        # Net::TVDB::Mirror object
+my $mirror;        # WebService::TVDB::Mirror object
 my $mirror_url;    # URL to the mirror
 
 # get a new object
-$mirror = Net::TVDB::Mirror->new();
-isa_ok( $mirror, 'Net::TVDB::Mirror' );
+$mirror = WebService::TVDB::Mirror->new();
+isa_ok( $mirror, 'WebService::TVDB::Mirror' );
 
 # test getting a mirror from XML
 $mirror->{mirrors} = XML::Simple::XMLin(

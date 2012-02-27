@@ -5,10 +5,10 @@ use warnings;
 
 use Test::More tests => 2;
 
-BEGIN { use_ok('Net::TVDB::Actor'); }
+BEGIN { use_ok('WebService::TVDB::Actor'); }
 
-my $actor;    # Net::TVDB::Actor object
+my $actor;    # WebService::TVDB::Actor object
 
 # empty new
-$actor = Net::TVDB::Actor->new();
-isa_ok( $actor, 'Net::TVDB::Actor' );
+$actor = WebService::TVDB::Actor->new();
+isa_ok( $actor, 'WebService::TVDB::Actor' );
