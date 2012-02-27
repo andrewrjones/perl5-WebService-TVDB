@@ -3,13 +3,15 @@
 use strict;
 use warnings;
 
-use LWP::Simple ();
 use File::HomeDir;
 use Test::More;
+use Net::Ping;
 
 my $api_key_file = File::HomeDir->my_home . '/.tvdb';
-unless ( LWP::Simple::get("http://www.google.com/") ) {
-    plan skip_all => 'No internet connection for live tests';
+my $p = Net::Ping->new( "syn", 2 );
+$p->port_number( getservbyname( "http", "tcp" ) );
+unless ( $p->ping('thetvdb.com') ) {
+    plan skip_all => 'Can\t find thetvdb.com for live tests';
 }
 else {
     unless ( -e $api_key_file ) {
