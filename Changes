@@ -1,4 +1,5 @@
 {{$NEXT}}
+    Check thetvdb.com is up before running live tests.
 
 1.120570  2012-02-26 21:18:44 Europe/London
     Initial version.
