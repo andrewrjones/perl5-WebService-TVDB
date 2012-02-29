@@ -1,4 +1,5 @@
 {{$NEXT}}
+    Fix failing tests when ~/.tvdb does not exist.
 
 1.120580  2012-02-27 21:31:49 Europe/London
     Rename from Net::TVDB to WebService::TVDB (see http://blog.andrew-jones.com/2012/02/26/introducing-net-tvdb/#comments)

@@ -16,7 +16,7 @@ my $series_list;    # array ref of WebService::TVDB::Series
 my $series;         # a WebService::TVDB::Series
 
 # get a new object
-$tvdb = WebService::TVDB->new();
+$tvdb = WebService::TVDB->new( api_key => 'ABC123' );
 isa_ok( $tvdb, 'WebService::TVDB' );
 
 # test slurping the api_key from a file
