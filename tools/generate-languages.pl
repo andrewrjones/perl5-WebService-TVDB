@@ -1,3 +1,5 @@
+#!perl
+
 use FindBin qw($Bin);
 use lib "$Bin/../lib/";
 
@@ -6,12 +8,12 @@ use LWP::Simple ();
 use XML::Simple qw(:strict);
 use DateTime;
 use File::HomeDir;
-use WebService::TVDB;
+use WebService::TVDB::Util qw(get_api_key_from_file);
 
 # Get the current list of languages
 my $api_key_file = File::HomeDir->my_home . '/.tvdb';
 die 'Can not get API key' unless -e $api_key_file;
-my $api_key = WebService::TVDB::_get_api_key_from_file($api_key_file);
+my $api_key = get_api_key_from_file($api_key_file);
 my $xml = LWP::Simple::get("http://www.thetvdb.com/api/$api_key/languages.xml");
 die 'Could not get XML' unless $xml;
 my $parsed_xml = XML::Simple::XMLin(
@@ -77,3 +79,5 @@ $generator->_add_content($pod);
 
 # Write to file
 $generator->create_or_die();
+
+exit 0;

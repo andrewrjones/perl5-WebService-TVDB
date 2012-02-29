@@ -8,6 +8,7 @@ package WebService::TVDB;
 use WebService::TVDB::Languages qw($languages);
 use WebService::TVDB::Series;
 use WebService::TVDB::Mirror;
+use WebService::TVDB::Util qw(get_api_key_from_file);
 
 use LWP::Simple ();
 use XML::Simple qw(:strict);
@@ -29,7 +30,7 @@ sub new {
     unless ( $self->api_key ) {
         require File::HomeDir;
         $self->{api_key} =
-          _get_api_key_from_file( File::HomeDir->my_home . API_KEY_FILE );
+          get_api_key_from_file( File::HomeDir->my_home . API_KEY_FILE );
         die 'Can\'t find API key' unless $self->api_key;
     }
 
@@ -91,23 +92,6 @@ sub _load_mirros {
     my $mirrors = WebService::TVDB::Mirror->new();
     $mirrors->fetch_mirror_list( $self->api_key );
     $self->{mirrors} = $mirrors;
-}
-
-# slurps the api_key from file
-sub _get_api_key_from_file {
-    my ($file) = @_;
-
-    return do {
-        local $/ = undef;
-        open my $fh, "<", $file
-          or die "could not open $file: $!";
-        my $doc = <$fh>;
-
-        # ensure there are no carriage returns
-        $doc =~ s/(\r|\n)//g;
-
-        return $doc;
-    };
 }
 
 1;

@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 9;
+use Test::More tests => 8;
 use Test::Exception;
 
 use XML::Simple qw(:strict);
@@ -18,10 +18,6 @@ my $series;         # a WebService::TVDB::Series
 # get a new object
 $tvdb = WebService::TVDB->new( api_key => 'ABC123' );
 isa_ok( $tvdb, 'WebService::TVDB' );
-
-# test slurping the api_key from a file
-my $api_key = WebService::TVDB::_get_api_key_from_file("$Bin/resources/tvdb");
-is( $api_key, 'ABC123' );
 
 # test parseing search xml
 my $xml = XML::Simple::XMLin(
