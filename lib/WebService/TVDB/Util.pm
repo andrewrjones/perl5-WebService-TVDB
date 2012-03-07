@@ -6,8 +6,9 @@ use warnings;
 # ABSTRACT: Utility functions
 
 require Exporter;
-our @ISA       = qw(Exporter);
-our @EXPORT_OK = qw(pipes_to_array get_api_key_from_file);
+our @ISA         = qw(Exporter);
+our @EXPORT_OK   = qw(pipes_to_array get_api_key_from_file);
+our %EXPORT_TAGS = ( all => \@EXPORT_OK );
 
 sub pipes_to_array {
     my $string = shift;

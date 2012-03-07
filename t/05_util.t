@@ -6,7 +6,7 @@ use warnings;
 use Test::More tests => 2;
 use FindBin qw($Bin);
 
-use WebService::TVDB::Util qw(pipes_to_array get_api_key_from_file);
+use WebService::TVDB::Util ':all';
 
 my $string   = '|Comedy|Action|';
 my @expected = qw(Comedy Action);
