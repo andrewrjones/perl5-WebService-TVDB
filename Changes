@@ -1,5 +1,6 @@
 {{$NEXT}}
-    Generate WebService::TVDB::Languages on build
+    Generate WebService::TVDB::Languages on build.
+    Need at least Net::Ping 2.33 for testing.
 
 1.120600  2012-02-29 10:42:26 Europe/London
     Fix failing tests when ~/.tvdb does not exist.

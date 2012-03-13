@@ -5,7 +5,7 @@ use warnings;
 
 use File::HomeDir;
 use Test::More;
-use Net::Ping;
+use Net::Ping 2.33;
 
 my $api_key_file = File::HomeDir->my_home . '/.tvdb';
 my $p = Net::Ping->new( "syn", 2 );
