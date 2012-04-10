@@ -47,6 +47,8 @@ $generator->add( languages => \%languages );
 # Generate the POD
 my $now = DateTime->now->ymd;
 my $pod = <<"HERE";
+=encoding utf-8
+
 =head1 SYNOPSIS
 
   use WebService::TVDB::Languages qw(\$languages);
