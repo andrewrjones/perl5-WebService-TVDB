@@ -80,13 +80,13 @@ sub fetch {
     -e $dir or mkpath($dir) or die 'could not create ' . $dir;
 
     # get the zip
-    unless (
-        LWP::Simple::is_success(
-            LWP::Simple::mirror( $self->_url, $cache_path )
-        )
-      )
+    my $res = LWP::Simple::mirror( $self->_url, $cache_path );
+    until ( $res == LWP::Simple::RC_NOT_MODIFIED
+        || LWP::Simple::is_success( $res ) )
     {
-        die 'could not get zip file at ' . $self->_url;
+        # TODO configurable wait time
+        sleep 1;
+        $res = LWP::Simple::mirror( $self->_url, $cache_path );
     }
     my $zip = Archive::Zip->new();
     unless ( $zip->read( $cache_path ) == AZ_OK ) {
@@ -160,9 +160,9 @@ sub _url {
 sub _cache_path {
     my ($self) = @_;
     return sprintf( CACHE_PATH,
-		File::HomeDir->my_home,
-		$self->seriesid,
-		$self->_api_language->{abbreviation} );
+        File::HomeDir->my_home,
+        $self->seriesid,
+        $self->_api_language->{abbreviation} );
 }
 
 # parse <language>.xml
