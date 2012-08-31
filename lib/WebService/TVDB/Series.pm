@@ -10,7 +10,9 @@ use WebService::TVDB::Banner;
 use WebService::TVDB::Episode;
 use WebService::TVDB::Util qw(pipes_to_array);
 
-use File::Temp ();
+use File::Homedir ();
+use File::Basename qw(dirname);
+use File::Path qw(mkpath);
 use Archive::Zip qw( :ERROR_CODES :CONSTANTS );
 use LWP::Simple ();
 use XML::Simple qw(:strict);
@@ -63,6 +65,9 @@ use Object::Tiny qw(
 # the url for full series data
 use constant URL => '%s/api/%s/series/%s/all/%s.zip';
 
+# the local path for full series data
+use constant CACHE_PATH => '%s/.tvdb/series/%s/all/%s.zip';
+
 # xml files in the zip
 use constant ACTORS_XML_FILE  => 'actors.xml';
 use constant BANNERS_XML_FILE => 'banners.xml';
@@ -70,19 +75,22 @@ use constant BANNERS_XML_FILE => 'banners.xml';
 sub fetch {
     my ($self) = @_;
 
+    my $cache_path = $self->_cache_path;
+    my $dir = dirname($cache_path);
+    -e $dir or mkpath($dir) or die 'could not create ' . $dir;
+
     # get the zip
-    my $temp = File::Temp->new();
     unless (
         LWP::Simple::is_success(
-            LWP::Simple::getstore( $self->_url, $temp->filename )
+            LWP::Simple::mirror( $self->_url, $cache_path )
         )
       )
     {
         die 'could not get zip file at ' . $self->_url;
     }
     my $zip = Archive::Zip->new();
-    unless ( $zip->read( $temp->filename ) == AZ_OK ) {
-        die 'could not read zip at ' . $temp->filename;
+    unless ( $zip->read( $cache_path ) == AZ_OK ) {
+        die 'could not read zip at ' . $cache_path;
     }
 
     # parse the xml files
@@ -147,7 +155,17 @@ sub _url {
         $self->_api_language->{abbreviation} );
 }
 
-# parse <lanugage>.xml
+# generates the local path for full series data
+# TODO configurable path
+sub _cache_path {
+    my ($self) = @_;
+    return sprintf( CACHE_PATH,
+		File::HomeDir->my_home,
+		$self->seriesid,
+		$self->_api_language->{abbreviation} );
+}
+
+# parse <language>.xml
 sub _parse_series_data {
     my ( $self, $xml ) = @_;
 
