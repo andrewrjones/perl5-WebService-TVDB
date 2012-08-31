@@ -11,6 +11,7 @@ use WebService::TVDB::Mirror;
 use WebService::TVDB::Util qw(get_api_key_from_file);
 
 use LWP::Simple ();
+use URI::Escape qw(uri_escape);
 use XML::Simple qw(:strict);
 
 use constant SEARCH_URL =>
@@ -51,7 +52,7 @@ sub search {
         $self->_load_mirrors();
     }
 
-    my $url = sprintf( SEARCH_URL, $term );
+    my $url = sprintf( SEARCH_URL, uri_escape($term) );
     my $xml = LWP::Simple::get( $url );
     until ( defined $xml )
     {
