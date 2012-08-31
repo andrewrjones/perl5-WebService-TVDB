@@ -10,6 +10,7 @@ use WebService::TVDB::Series;
 use WebService::TVDB::Mirror;
 use WebService::TVDB::Util qw(get_api_key_from_file);
 
+use Carp qw(carp);
 use LWP::Simple ();
 use URI::Escape qw(uri_escape);
 use XML::Simple qw(:strict);
@@ -56,6 +57,7 @@ sub search {
     my $xml = LWP::Simple::get( $url );
     until ( defined $xml )
     {
+        carp "failed get URL $url - retrying";
         # TODO configurable wait time
         sleep 1;
         $xml = LWP::Simple::get( $url );

@@ -10,6 +10,7 @@ use WebService::TVDB::Banner;
 use WebService::TVDB::Episode;
 use WebService::TVDB::Util qw(pipes_to_array);
 
+use Carp qw(carp);
 use File::Homedir ();
 use File::Basename qw(dirname);
 use File::Path qw(mkpath);
@@ -75,18 +76,20 @@ use constant BANNERS_XML_FILE => 'banners.xml';
 sub fetch {
     my ($self) = @_;
 
+    my $url = $self->_url;
     my $cache_path = $self->_cache_path;
-    my $dir = dirname($cache_path);
-    -e $dir or mkpath($dir) or die 'could not create ' . $dir;
+    my $dir = dirname( $cache_path );
+    -e $dir or mkpath( $dir ) or die 'could not create ' . $dir;
 
     # get the zip
-    my $res = LWP::Simple::mirror( $self->_url, $cache_path );
+    my $res = LWP::Simple::mirror( $url, $cache_path );
     until ( $res == LWP::Simple::RC_NOT_MODIFIED
         || LWP::Simple::is_success( $res ) )
     {
+        carp "failed get URL $url - retrying";
         # TODO configurable wait time
         sleep 1;
-        $res = LWP::Simple::mirror( $self->_url, $cache_path );
+        $res = LWP::Simple::mirror( $url, $cache_path );
     }
     my $zip = Archive::Zip->new();
     unless ( $zip->read( $cache_path ) == AZ_OK ) {
