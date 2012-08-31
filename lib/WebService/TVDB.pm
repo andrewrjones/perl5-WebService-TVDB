@@ -63,8 +63,9 @@ sub search {
     $self->{series} = _parse_series(
         XML::Simple::XMLin(
             $xml,
-            ForceArray => ['Series'],
-            KeyAttr    => 'Series'
+            ForceArray    => ['Series'],
+            KeyAttr       => 'Series',
+            SuppressEmpty => 1
         ),
         $self->api_key,
         $languages->{ $self->language },

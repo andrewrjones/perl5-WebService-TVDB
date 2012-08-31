@@ -105,8 +105,9 @@ sub fetch {
     }
     $parsed_xml = XML::Simple::XMLin(
         $xml,
-        ForceArray => ['Data'],
-        KeyAttr    => 'Data'
+        ForceArray    => ['Data'],
+        KeyAttr       => 'Data',
+        SuppressEmpty => 1
     );
     $self->_parse_series_data($parsed_xml);
 
@@ -116,8 +117,9 @@ sub fetch {
     }
     $parsed_xml = XML::Simple::XMLin(
         $xml,
-        ForceArray => ['Actor'],
-        KeyAttr    => 'Actor'
+        ForceArray    => ['Actor'],
+        KeyAttr       => 'Actor',
+        SuppressEmpty => 1
     );
     $self->_parse_actors($parsed_xml);
 
@@ -127,8 +129,9 @@ sub fetch {
     }
     $parsed_xml = XML::Simple::XMLin(
         $xml,
-        ForceArray => ['Banner'],
-        KeyAttr    => 'Banner'
+        ForceArray    => ['Banner'],
+        KeyAttr       => 'Banner',
+        SuppressEmpty => 1
     );
     $self->_parse_banners($parsed_xml);
 }
