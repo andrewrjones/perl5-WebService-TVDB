@@ -1,4 +1,6 @@
 {{$NEXT}}
+
+1.122460  2012-09-02 17:41:56 Europe/London
     Encode the POD for languages.
     Keep a local cache of series data. [Tim De Pauw]
     Implement a retry option when getting URL's. [Tim De Pauw]
