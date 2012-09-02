@@ -76,23 +76,24 @@ use constant BANNERS_XML_FILE => 'banners.xml';
 sub fetch {
     my ($self) = @_;
 
-    my $url = $self->_url;
+    my $url        = $self->_url;
     my $cache_path = $self->_cache_path;
-    my $dir = dirname( $cache_path );
-    -e $dir or mkpath( $dir ) or die 'could not create ' . $dir;
+    my $dir        = dirname($cache_path);
+    -e $dir or mkpath($dir) or die 'could not create ' . $dir;
 
     # get the zip
     my $res = LWP::Simple::mirror( $url, $cache_path );
     until ( $res == LWP::Simple::RC_NOT_MODIFIED
-        || LWP::Simple::is_success( $res ) )
+          || LWP::Simple::is_success($res) )
     {
         carp "failed get URL $url - retrying";
+
         # TODO configurable wait time
         sleep 1;
         $res = LWP::Simple::mirror( $url, $cache_path );
     }
     my $zip = Archive::Zip->new();
-    unless ( $zip->read( $cache_path ) == AZ_OK ) {
+    unless ( $zip->read($cache_path) == AZ_OK ) {
         die 'could not read zip at ' . $cache_path;
     }
 
@@ -166,8 +167,7 @@ sub _url {
 sub _cache_path {
     my ($self) = @_;
     return sprintf( CACHE_PATH,
-        File::HomeDir->my_home,
-        $self->seriesid,
+        File::HomeDir->my_home, $self->seriesid,
         $self->_api_language->{abbreviation} );
 }
 

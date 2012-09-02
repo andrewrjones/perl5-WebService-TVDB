@@ -23,6 +23,7 @@ use constant API_KEY_FILE => '/.tvdb';
 use Object::Tiny qw(
   api_key
   language
+  max_retries
 );
 
 sub new {
@@ -40,6 +41,10 @@ sub new {
         $self->{language} = 'English';
     }
 
+    unless ( $self->max_retries ) {
+        $self->{max_retries} = 10;
+    }
+
     return $self;
 }
 
@@ -53,14 +58,20 @@ sub search {
         $self->_load_mirrors();
     }
 
-    my $url = sprintf( SEARCH_URL, uri_escape($term) );
-    my $xml = LWP::Simple::get( $url );
-    until ( defined $xml )
-    {
+    my $url     = sprintf( SEARCH_URL, uri_escape($term) );
+    my $xml     = LWP::Simple::get($url);
+    my $retries = 0;
+    until ( defined $xml || $retries == $self->max_retries ) {
         carp "failed get URL $url - retrying";
+
         # TODO configurable wait time
         sleep 1;
-        $xml = LWP::Simple::get( $url );
+        $xml = LWP::Simple::get($url);
+
+        $retries++;
+    }
+    unless ($xml) {
+        die "failed to get URL $url after $retries retries. Aborting.";
     }
     $self->{series} = _parse_series(
         XML::Simple::XMLin(
@@ -167,6 +178,10 @@ This is your API key. If not passed in here, we will look in ~/.tvdb. Otherwise 
 =item language
 
 The language you want tour results in. L<See WebService::TVDB::Languages> for a list of languages. Defaults to English.
+
+=item max_retries
+
+The amount of times we will try to get the series if our call to the URL failes. Defaults to 10.
 
 =back
 
