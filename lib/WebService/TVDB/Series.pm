@@ -67,7 +67,7 @@ use Object::Tiny qw(
 use constant URL => '%s/api/%s/series/%s/all/%s.zip';
 
 # the local path for full series data
-use constant CACHE_PATH => '%s/.tvdb/series/%s/all/%s.zip';
+use constant CACHE_PATH => '%s/.tvdbcache/series/%s/all/%s.zip';
 
 # xml files in the zip
 use constant ACTORS_XML_FILE  => 'actors.xml';
