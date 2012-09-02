@@ -82,7 +82,8 @@ sub search {
         ),
         $self->api_key,
         $languages->{ $self->language },
-        $self->{mirrors}
+        $self->{mirrors},
+        $self->max_retries
     );
 
     return $self->{series};
@@ -90,7 +91,7 @@ sub search {
 
 # parse the series xml and return an array of WebService::TVDB::Series
 sub _parse_series {
-    my ( $xml, $api_key, $api_language, $api_mirrors ) = @_;
+    my ( $xml, $api_key, $api_language, $api_mirrors, $max_retries ) = @_;
 
     # loop over results and create new series objects
     my @series;
@@ -100,7 +101,8 @@ sub _parse_series {
             %$_,
             _api_key      => $api_key,
             _api_language => $api_language,
-            _api_mirrors  => $api_mirrors
+            _api_mirrors  => $api_mirrors,
+            _max_retries  => $max_retries
           );
     }
 

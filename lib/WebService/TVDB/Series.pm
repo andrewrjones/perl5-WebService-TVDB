@@ -61,6 +61,7 @@ use Object::Tiny qw(
   _api_key
   _api_language
   _api_mirrors
+  _max_retries
 );
 
 # the url for full series data
@@ -83,14 +84,21 @@ sub fetch {
 
     # get the zip
     my $res = LWP::Simple::mirror( $url, $cache_path );
-    until ( $res == LWP::Simple::RC_NOT_MODIFIED
-          || LWP::Simple::is_success($res) )
+    my $retries = 0;
+    until (  $res == LWP::Simple::RC_NOT_MODIFIED
+          || LWP::Simple::is_success($res)
+          || $retries == $self->_max_retries )
     {
         carp "failed get URL $url - retrying";
 
         # TODO configurable wait time
         sleep 1;
         $res = LWP::Simple::mirror( $url, $cache_path );
+
+        $retries++;
+    }
+    if ( $retries == $self->_max_retries ) {
+        die "failed to get URL $url after $retries retries. Aborting.";
     }
     my $zip = Archive::Zip->new();
     unless ( $zip->read($cache_path) == AZ_OK ) {
