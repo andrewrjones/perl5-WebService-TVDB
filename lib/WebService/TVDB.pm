@@ -124,7 +124,7 @@ __END__
 
 =head1 SYNOPSIS
 
-  my $tvdb = WebService::TVDB->new(api_key => 'ABC123', language => 'English');
+  my $tvdb = WebService::TVDB->new(api_key => 'ABC123', language => 'English', max_retries => 10);
 
   my $series_list = $tvdb->search('men behaving badly');
 
