@@ -10,7 +10,9 @@ use WebService::TVDB::Series;
 use WebService::TVDB::Mirror;
 use WebService::TVDB::Util qw(get_api_key_from_file);
 
+use Carp qw(carp);
 use LWP::Simple ();
+use URI::Escape qw(uri_escape);
 use XML::Simple qw(:strict);
 
 use constant SEARCH_URL =>
@@ -48,15 +50,24 @@ sub search {
         die 'search term is required';
     }
     unless ( $self->{mirrors} ) {
-        $self->_load_mirros();
+        $self->_load_mirrors();
     }
 
-    my $xml = LWP::Simple::get( sprintf( SEARCH_URL, $term ) );
+    my $url = sprintf( SEARCH_URL, uri_escape($term) );
+    my $xml = LWP::Simple::get( $url );
+    until ( defined $xml )
+    {
+        carp "failed get URL $url - retrying";
+        # TODO configurable wait time
+        sleep 1;
+        $xml = LWP::Simple::get( $url );
+    }
     $self->{series} = _parse_series(
         XML::Simple::XMLin(
             $xml,
-            ForceArray => ['Series'],
-            KeyAttr    => 'Series'
+            ForceArray    => ['Series'],
+            KeyAttr       => 'Series',
+            SuppressEmpty => 1
         ),
         $self->api_key,
         $languages->{ $self->language },
@@ -86,7 +97,7 @@ sub _parse_series {
 }
 
 # loads mirros when needed
-sub _load_mirros {
+sub _load_mirrors {
     my ($self) = @_;
 
     my $mirrors = WebService::TVDB::Mirror->new();
