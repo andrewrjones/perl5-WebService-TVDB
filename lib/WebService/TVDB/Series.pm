@@ -82,6 +82,8 @@ sub fetch {
     my $dir        = dirname($cache_path);
     -e $dir or mkpath($dir) or die 'could not create ' . $dir;
 
+    my $agent = $LWP::Simple::ua->agent;
+    $LWP::Simple::ua->agent( "WebService::TVDB/$WebService::TVDB::VERSION" );
     # get the zip
     my $res = LWP::Simple::mirror( $url, $cache_path );
     my $retries = 0;
@@ -89,7 +91,7 @@ sub fetch {
           || LWP::Simple::is_success($res)
           || $retries == $self->_max_retries )
     {
-        carp "failed get URL $url - retrying";
+        carp "failed to get URL $url: $res - retrying";
 
         # TODO configurable wait time
         sleep 1;
@@ -97,6 +99,7 @@ sub fetch {
 
         $retries++;
     }
+    $LWP::Simple::ua->agent( $agent );
     if ( $retries == $self->_max_retries ) {
         die "failed to get URL $url after $retries retries. Aborting.";
     }
