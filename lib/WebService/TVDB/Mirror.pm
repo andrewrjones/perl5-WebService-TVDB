@@ -26,7 +26,10 @@ sub fetch_mirror_list {
         die 'Need an API key';
     }
 
+    my $agent = $LWP::Simple::ua->agent;
+    $LWP::Simple::ua->agent( "WebService::TVDB/$WebService::TVDB::VERSION" );
     my $xml = LWP::Simple::get( sprintf( MIRRORS_URL, $api_key ) );
+    $LWP::Simple::ua->agent( $agent );
 
     unless ($xml) {
         die "Could not get mirrors.xml";
