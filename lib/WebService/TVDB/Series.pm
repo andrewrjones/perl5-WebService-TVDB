@@ -11,7 +11,6 @@ use WebService::TVDB::Episode;
 use WebService::TVDB::Util qw(pipes_to_array);
 
 use Carp qw(carp);
-use File::Homedir ();
 use File::Basename qw(dirname);
 use File::Path qw(mkpath);
 use Archive::Zip qw( :ERROR_CODES :CONSTANTS );
@@ -174,6 +173,7 @@ sub _url {
 # TODO configurable path
 sub _cache_path {
     my ($self) = @_;
+    require File::HomeDir;
     return sprintf( CACHE_PATH,
         File::HomeDir->my_home, $self->seriesid,
         $self->_api_language->{abbreviation} );
