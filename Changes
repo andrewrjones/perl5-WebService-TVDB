@@ -1,4 +1,5 @@
 {{$NEXT}}
+    Fix dependency (File::Homedir should be File::HomeDir)
 
 1.122460  2012-09-02 17:41:56 Europe/London
     Encode the POD for languages.
