@@ -1,4 +1,5 @@
 {{$NEXT}}
+    Specify HTTP user agent. [Tim De Pauw]
 
 1.122570  2012-09-13 18:57:22 Europe/London
     Fix dependency (File::Homedir should be File::HomeDir)
