@@ -1,4 +1,6 @@
 {{$NEXT}}
+
+1.122800  2012-10-06 17:30:17 Europe/London
     Specify HTTP user agent. [Tim De Pauw]
     Ensure cache path is untainted.
     Fix "Use of uninitialized value in pattern match (m//) at /.../WebService/TVDB/Episode.pm line 47".
