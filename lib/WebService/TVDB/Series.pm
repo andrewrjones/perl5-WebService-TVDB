@@ -78,6 +78,7 @@ sub fetch {
 
     my $url        = $self->_url;
     my $cache_path = $self->_cache_path;
+    $cache_path =~ /\A(.*)\z/s or die; $cache_path = $1; # ensure its untainted
     my $dir        = dirname($cache_path);
     -e $dir or mkpath($dir) or die 'could not create ' . $dir;
 
