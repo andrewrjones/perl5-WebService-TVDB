@@ -7,19 +7,15 @@ use File::HomeDir;
 use Test::More;
 use Net::Ping 2.33;
 
+# skip tests if we are not online
+use HTTP::Online ':skip_all';
+
 my $api_key_file = File::HomeDir->my_home . '/.tvdb';
-my $p = Net::Ping->new( "syn", 2 );
-$p->port_number( getservbyname( "http", "tcp" ) );
-unless ( $p->ping('thetvdb.com') ) {
-    plan skip_all => 'Can\t find thetvdb.com for live tests';
+unless ( -e $api_key_file ) {
+    plan skip_all => "Skipping live tests: Can't find $api_key_file";
 }
 else {
-    unless ( -e $api_key_file ) {
-        plan skip_all => "Skipping live tests: Can't find $api_key_file";
-    }
-    else {
-        plan tests => 97;
-    }
+    plan tests => 97;
 }
 
 use WebService::TVDB;
