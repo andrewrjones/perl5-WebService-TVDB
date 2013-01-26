@@ -112,6 +112,27 @@ sub _parse_series {
     return \@series;
 }
 
+# get serie by id
+sub get_serie {
+    my ($self, $id) = @_;
+
+    die 'id is required' unless $id;
+    unless ( $self->{mirrors} ) {
+        $self->_load_mirrors();
+    }
+
+    my $s = WebService::TVDB::Series->new(
+        seriesid => $id,
+        language => $languages->{ $self->language }->{abbreviation},
+        _api_key      => $self->api_key,
+        _api_language => $languages->{ $self->language },
+        _api_mirrors  => $self->{mirrors},
+        _max_retries  => $self->max_retries
+    );
+    $s->fetch();
+    return $s;
+}
+
 # loads mirros when needed
 sub _load_mirrors {
     my ($self) = @_;
@@ -193,5 +214,9 @@ The amount of times we will try to get the series if our call to the URL failes.
 =method search( $term )
 
 Searches the TVDB and returns a list of L<WebService::TVDB::Series> as the result.
+
+=method get_serie($seriesid)
+
+Get the L<WebService::TVDB::Series> by seriesid.
 
 =cut
