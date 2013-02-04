@@ -122,7 +122,7 @@ sub fetch {
     }
     $parsed_xml = XML::Simple::XMLin(
         $xml,
-        ForceArray    => ['Data'],
+        ForceArray    => [ 'Data', 'Episode' ],
         KeyAttr       => 'Data',
         SuppressEmpty => 1
     );
@@ -199,11 +199,13 @@ sub _parse_series_data {
         }
     }
 
-    # populate Episodes
+    # populate Episodes, if they exist
     my @episodes;
-    for ( @{ $xml->{Episode} } ) {
-        push @episodes, WebService::TVDB::Episode->new( %{$_} );
+    if ( $xml->{Episode} ) {
+        for ( @{ $xml->{Episode} } ) {
+            push @episodes, WebService::TVDB::Episode->new( %{$_} );
 
+        }
     }
     $self->{episodes} = \@episodes;
     return $self->{episodes};

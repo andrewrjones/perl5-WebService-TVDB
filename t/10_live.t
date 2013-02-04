@@ -15,7 +15,7 @@ unless ( -e $api_key_file ) {
     plan skip_all => "Skipping live tests: Can't find $api_key_file";
 }
 else {
-    plan tests => 98;
+    plan tests => 104;
 }
 
 use WebService::TVDB;
@@ -69,3 +69,20 @@ for ( @{$banners} ) {
 my $banner = @{$banners}[0];
 is( $banner->id,         22614 );
 is( $banner->BannerType, 'fanart' );
+
+# do another search for a series with no episodes (#12)
+$series_list = $tvdb->search('Lost Dinosaurs Of New Zealand');
+is( @{$series_list}, 1, 'one series result' );
+$series = @{$series_list}[0];
+isa_ok( $series, 'WebService::TVDB::Series' );
+is( $series->SeriesName, 'Lost Dinosaurs Of New Zealand' );
+
+$series->fetch();
+
+is( $series->Status, 'Ended' );
+
+$episodes = $series->episodes;
+is( @$episodes, 1, '1 episode' );
+
+$episode = @{$episodes}[0];
+is( $episode->id, 1173681 );
