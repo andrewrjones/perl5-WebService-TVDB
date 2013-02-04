@@ -15,7 +15,7 @@ unless ( -e $api_key_file ) {
     plan skip_all => "Skipping live tests: Can't find $api_key_file";
 }
 else {
-    plan tests => 104;
+    plan tests => 106;
 }
 
 use WebService::TVDB;
@@ -86,3 +86,8 @@ is( @$episodes, 1, '1 episode' );
 
 $episode = @{$episodes}[0];
 is( $episode->id, 1173681 );
+
+# do a search by id
+$series = $tvdb->get(76213);
+is( $series->SeriesName, 'Men Behaving Badly' );
+is( $series->Status,     'Ended' );

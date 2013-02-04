@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 10;
+use Test::More tests => 11;
 use Test::Exception;
 
 use XML::Simple qw(:strict);
@@ -41,3 +41,6 @@ is( $series->SeriesName, 'Men Behaving Badly (US)' );
 # test an error search
 throws_ok { $tvdb->search() } qr/search term is required/i,
   'needs an search term';
+
+# test an error get
+throws_ok { $tvdb->get() } qr/id is required/i, 'needs an id';

@@ -92,6 +92,34 @@ sub search {
     return $self->{series};
 }
 
+sub get {
+    my ( $self, $id ) = @_;
+
+    die 'id is required' unless $id;
+    unless ( $self->{mirrors} ) {
+        $self->_load_mirrors();
+    }
+
+    $self->{series} = _parse_series(
+        {
+            Series => [
+                {
+                    seriesid => $id,
+                    language => $languages->{ $self->language }->{abbreviation},
+                }
+            ]
+        },
+        $self->api_key,
+        $languages->{ $self->language },
+        $self->{mirrors},
+        $self->max_retries
+    );
+
+    $self->{series}->[0]->fetch();
+
+    return $self->{series}->[0];
+}
+
 # parse the series xml and return an array of WebService::TVDB::Series
 sub _parse_series {
     my ( $xml, $api_key, $api_language, $api_mirrors, $max_retries ) = @_;
@@ -110,27 +138,6 @@ sub _parse_series {
     }
 
     return \@series;
-}
-
-# get serie by id
-sub get_serie {
-    my ($self, $id) = @_;
-
-    die 'id is required' unless $id;
-    unless ( $self->{mirrors} ) {
-        $self->_load_mirrors();
-    }
-
-    my $s = WebService::TVDB::Series->new(
-        seriesid => $id,
-        language => $languages->{ $self->language }->{abbreviation},
-        _api_key      => $self->api_key,
-        _api_language => $languages->{ $self->language },
-        _api_mirrors  => $self->{mirrors},
-        _max_retries  => $self->max_retries
-    );
-    $s->fetch();
-    return $s;
 }
 
 # loads mirros when needed
@@ -181,6 +188,16 @@ __END__
     say $banner->url;
   }
 
+  # can also get by id
+  my $series = $tvdb->get(76213);
+
+  # already done a fetch()
+
+  say $series->SeriesName;
+  say $series->Overview;
+  say $series->Rating;
+  say $series->Status;
+
 =head1 DESCRIPTION
 
 WebService::TVDB is an interface to L<http://thetvdb.com/>.
@@ -215,8 +232,8 @@ The amount of times we will try to get the series if our call to the URL failes.
 
 Searches the TVDB and returns a list of L<WebService::TVDB::Series> as the result.
 
-=method get_serie($seriesid)
+=method get( $id )
 
-Get the L<WebService::TVDB::Series> by seriesid.
+Get a single L<WebService::TVDB::Series> by series id.
 
 =cut

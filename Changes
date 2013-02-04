@@ -2,6 +2,7 @@
     Fix failing tests.
     Fix example code (#13).
     Fix parsing series data if there are zero or one episodes (#12).
+    Add method to search by ID (#1, #14). Thanks fayland.
 
 1.123160  2012-11-11 17:59:08 Europe/London
     Use HTTP::Online to test for online access when running tests.
