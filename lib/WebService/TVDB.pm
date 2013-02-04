@@ -134,7 +134,7 @@ __END__
   my $series = @{$series_list}[0];
   # $series is a WebService::TVDB::Series
   say $series->SeriesName;
-  say $series->overview;
+  say $series->Overview;
 
   # fetches full series data
   $series->fetch();
