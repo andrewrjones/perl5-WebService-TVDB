@@ -26,6 +26,11 @@ my $parsed_xml = XML::Simple::XMLin(
 );
 
 my %languages = map { $_->{name} => $_ } @{ $parsed_xml->{Language} };
+$languages{'ALL'} = {
+    id           => 0,
+    name         => '(All)',
+    abbreviation => 'all'
+};
 
 # Generate the package
 my $generator = new Code::Generator::Perl(
