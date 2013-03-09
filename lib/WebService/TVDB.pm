@@ -15,7 +15,7 @@ use URI::Escape qw(uri_escape);
 use XML::Simple qw(:strict);
 
 use constant SEARCH_URL =>
-  'http://www.thetvdb.com/api/GetSeries.php?seriesname=%s';
+  'http://thetvdb.com/api/GetSeries.php?seriesname=%s';
 
 use constant API_KEY_FILE => '/.tvdb';
 

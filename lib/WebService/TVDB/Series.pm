@@ -19,7 +19,7 @@ use XML::Simple qw(:strict);
 
 # Assessors
 # alphabetically, case insensitive
-# First section from http://www.thetvdb.com/api/GetSeries.php?seriesname=...
+# First section from http://thetvdb.com/api/GetSeries.php?seriesname=...
 # Second section from <langauge.xml>
 # Third section are WebService::TVDB:: objects
 # Forth section are API values
