@@ -1,4 +1,6 @@
 {{$NEXT}}
+    No longer need to call Mirros.xml. [Tim De Pauw]
+    Allow searching all languages. [Tim De Pauw]
 
 1.130350  2013-02-04 19:59:45 Europe/London
     Fix failing tests.
