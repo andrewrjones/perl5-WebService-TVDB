@@ -19,7 +19,7 @@ use XML::Simple qw(:strict);
 
 # Assessors
 # alphabetically, case insensitive
-# First section from http://www.thetvdb.com/api/GetSeries.php?seriesname=...
+# First section from http://thetvdb.com/api/GetSeries.php?seriesname=...
 # Second section from <langauge.xml>
 # Third section are WebService::TVDB:: objects
 # Forth section are API values
@@ -59,12 +59,11 @@ use Object::Tiny qw(
 
   _api_key
   _api_language
-  _api_mirrors
   _max_retries
 );
 
 # the url for full series data
-use constant URL => '%s/api/%s/series/%s/all/%s.zip';
+use constant URL => 'http://thetvdb.com/api/%s/series/%s/all/%s.zip';
 
 # the local path for full series data
 use constant CACHE_PATH => '%s/.tvdbcache/series/%s/all/%s.zip';
@@ -170,7 +169,6 @@ sub get_episode {
 sub _url {
     my ($self) = @_;
     return sprintf( URL,
-        $self->_api_mirrors->get_mirror,
         $self->_api_key, $self->seriesid,
         $self->_api_language->{abbreviation} );
 }

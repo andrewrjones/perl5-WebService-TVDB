@@ -7,7 +7,6 @@ package WebService::TVDB;
 
 use WebService::TVDB::Languages qw($languages);
 use WebService::TVDB::Series;
-use WebService::TVDB::Mirror;
 use WebService::TVDB::Util qw(get_api_key_from_file);
 
 use Carp qw(carp);
@@ -16,7 +15,7 @@ use URI::Escape qw(uri_escape);
 use XML::Simple qw(:strict);
 
 use constant SEARCH_URL =>
-  'http://www.thetvdb.com/api/GetSeries.php?seriesname=%s';
+  'http://thetvdb.com/api/GetSeries.php?seriesname=%s&language=%s';
 
 use constant API_KEY_FILE => '/.tvdb';
 
@@ -54,11 +53,9 @@ sub search {
     unless ($term) {
         die 'search term is required';
     }
-    unless ( $self->{mirrors} ) {
-        $self->_load_mirrors();
-    }
 
-    my $url = sprintf( SEARCH_URL, uri_escape($term) );
+    my $url = sprintf( SEARCH_URL, uri_escape($term),
+        $languages->{ $self->language }->{ abbreviation } );
     my $agent = $LWP::Simple::ua->agent;
     $LWP::Simple::ua->agent("WebService::TVDB/$WebService::TVDB::VERSION");
     my $xml     = LWP::Simple::get($url);
@@ -85,7 +82,6 @@ sub search {
         ),
         $self->api_key,
         $languages->{ $self->language },
-        $self->{mirrors},
         $self->max_retries
     );
 
@@ -96,9 +92,6 @@ sub get {
     my ( $self, $id ) = @_;
 
     die 'id is required' unless $id;
-    unless ( $self->{mirrors} ) {
-        $self->_load_mirrors();
-    }
 
     $self->{series} = _parse_series(
         {
@@ -111,7 +104,6 @@ sub get {
         },
         $self->api_key,
         $languages->{ $self->language },
-        $self->{mirrors},
         $self->max_retries
     );
 
@@ -122,7 +114,7 @@ sub get {
 
 # parse the series xml and return an array of WebService::TVDB::Series
 sub _parse_series {
-    my ( $xml, $api_key, $api_language, $api_mirrors, $max_retries ) = @_;
+    my ( $xml, $api_key, $api_language, $max_retries ) = @_;
 
     # loop over results and create new series objects
     my @series;
@@ -132,21 +124,11 @@ sub _parse_series {
             %$_,
             _api_key      => $api_key,
             _api_language => $api_language,
-            _api_mirrors  => $api_mirrors,
             _max_retries  => $max_retries
           );
     }
 
     return \@series;
-}
-
-# loads mirros when needed
-sub _load_mirrors {
-    my ($self) = @_;
-
-    my $mirrors = WebService::TVDB::Mirror->new();
-    $mirrors->fetch_mirror_list( $self->api_key );
-    $self->{mirrors} = $mirrors;
 }
 
 1;
