@@ -1,4 +1,6 @@
 {{$NEXT}}
+
+1.130690  2013-03-10 20:14:22 Europe/London
     No longer need to call Mirros.xml (#18). [Tim De Pauw]
     Removed www prefix (#18). [Tim De Pauw]
     Allow searching all languages (#16). [Tim De Pauw]
