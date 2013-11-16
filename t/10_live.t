@@ -15,7 +15,7 @@ unless ( -e $api_key_file ) {
     plan skip_all => "Skipping live tests: Can't find $api_key_file";
 }
 else {
-    plan tests => 106;
+    plan tests => 107;
 }
 
 use WebService::TVDB;
@@ -59,7 +59,7 @@ is( $actor->Name, 'Caroline Quentin' );
 
 # check banners
 my $banners = $series->banners;
-is( @$banners, 21, '21 banners' );
+ok( @$banners > 21, 'more than 21 banners' );
 
 for ( @{$banners} ) {
     isa_ok( $_, 'WebService::TVDB::Banner' );
