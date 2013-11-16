@@ -54,8 +54,8 @@ sub search {
         die 'search term is required';
     }
 
-    my $url = sprintf( SEARCH_URL, uri_escape($term),
-        $languages->{ $self->language }->{ abbreviation } );
+    my $url = sprintf( SEARCH_URL,
+        uri_escape($term), $languages->{ $self->language }->{abbreviation} );
     my $agent = $LWP::Simple::ua->agent;
     $LWP::Simple::ua->agent("WebService::TVDB/$WebService::TVDB::VERSION");
     my $xml     = LWP::Simple::get($url);

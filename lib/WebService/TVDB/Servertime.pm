@@ -8,8 +8,7 @@ package WebService::TVDB::Servertime;
 use XML::Simple qw(:strict);
 use LWP::Simple;
 
-use constant SERVERTIME_URL =>
-  'http://thetvdb.com/api/Updates.php?type=none';
+use constant SERVERTIME_URL => 'http://thetvdb.com/api/Updates.php?type=none';
 
 sub new {
     my $class = shift;
