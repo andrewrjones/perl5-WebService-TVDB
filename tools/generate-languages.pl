@@ -11,21 +11,23 @@ use File::HomeDir;
 use WebService::TVDB::Util qw(get_api_key_from_file);
 
 # Get the current list of languages
+my %languages;
 my $api_key_file = File::HomeDir->my_home . '/.tvdb';
-die 'Can not get API key' unless -e $api_key_file;
-my $api_key = get_api_key_from_file($api_key_file);
-my $agent   = $LWP::Simple::ua->agent;
-$LWP::Simple::ua->agent("WebService::TVDB/$WebService::TVDB::VERSION");
-my $xml = LWP::Simple::get("http://thetvdb.com/api/$api_key/languages.xml");
-$LWP::Simple::ua->agent($agent);
-die 'Could not get XML' unless $xml;
-my $parsed_xml = XML::Simple::XMLin(
-    $xml,
-    ForceArray => ['Language'],
-    KeyAttr    => 'Language'
-);
+if ( -e $api_key_file ) {
+    my $api_key = get_api_key_from_file($api_key_file);
+    my $agent   = $LWP::Simple::ua->agent;
+    $LWP::Simple::ua->agent("WebService::TVDB/$WebService::TVDB::VERSION");
+    my $xml = LWP::Simple::get("http://thetvdb.com/api/$api_key/languages.xml");
+    $LWP::Simple::ua->agent($agent);
+    die 'Could not get XML' unless $xml;
+    my $parsed_xml = XML::Simple::XMLin(
+        $xml,
+        ForceArray => ['Language'],
+        KeyAttr    => 'Language'
+    );
 
-my %languages = map { $_->{name} => $_ } @{ $parsed_xml->{Language} };
+    %languages = map { $_->{name} => $_ } @{ $parsed_xml->{Language} };
+}
 $languages{'ALL'} = {
     id           => 0,
     name         => '(All)',
